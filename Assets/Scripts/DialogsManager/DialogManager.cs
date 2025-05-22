@@ -14,6 +14,9 @@ namespace DialogsManager
         {
             {typeof(MainMenuDialog), "MainMenuDialog" },
             {typeof(MainMenuSettingDialog), "MainMenuSettingDialog" },
+            {typeof(GameUIDialog), "GameUIDialog" },
+            {typeof(GamePauseDialog), "GamePauseDialog" },
+            {typeof(GameSettingDialog), "GameSettingDialog" },
         };
 
         public static T ShowDialog<T>() where T : Dialog

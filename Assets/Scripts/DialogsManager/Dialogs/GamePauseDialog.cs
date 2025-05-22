@@ -1,0 +1,50 @@
+using ServicesLocator;
+using SoundManager;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
+
+namespace DialogsManager.Dialogs
+{
+    public class GamePauseDialog : Dialog
+    {
+        [SerializeField] private Button resumeButton;
+        [SerializeField] private Button settingButton;
+        [SerializeField] private Button exitButton;
+
+        public void Initialize()
+        {
+            resumeButton.onClick.AddListener(Resume);
+            settingButton.onClick.AddListener(ShowSettings);
+            exitButton.onClick.AddListener(ExitGame);
+        }
+
+        private void Resume()
+        {
+            Hide();
+            ServiceLocator.Current.Get<AudioManager>().PlaySound("ui", "UI");
+        }
+
+        private void ShowSettings()
+        {
+            var dialog = DialogManager.ShowDialog<GameSettingDialog>();
+            ServiceLocator.Current.Get<AudioManager>().PlaySound("ui", "UI");
+            dialog.Initialize();
+            Hide();
+        }
+
+        private void ExitGame()
+        {
+            SceneManager.LoadScene("Menu");
+            ServiceLocator.Current.Get<AudioManager>().PlaySound("ui", "UI");
+        }
+
+        public override void Dispose()
+        {
+            resumeButton.onClick.RemoveAllListeners();
+            settingButton.onClick.RemoveAllListeners();
+            exitButton.onClick.RemoveAllListeners();
+        }
+    }
+}
