@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DialogsManager.Dialogs;
 using ServicesLocator;
 using UnityEngine;
 
@@ -11,7 +12,8 @@ namespace DialogsManager
         
         private static readonly Dictionary<Type, string> PrefabsDictionary = new Dictionary<Type, string>()
         {
-            
+            {typeof(MainMenuDialog), "MainMenuDialog" },
+            {typeof(MainMenuSettingDialog), "MainMenuSettingDialog" },
         };
 
         public static T ShowDialog<T>() where T : Dialog

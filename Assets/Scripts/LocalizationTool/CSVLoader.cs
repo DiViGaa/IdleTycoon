@@ -14,7 +14,7 @@ namespace LocalizationTool
 
         public void LoadCsv()
         {
-            _csvFile = Resources.Load<TextAsset>("Localization");
+            _csvFile = Resources.Load<TextAsset>("Localization/Localization");
         }
 
         public Dictionary<string, string> GetDictionaryValues(string atributeId)

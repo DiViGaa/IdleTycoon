@@ -8,13 +8,15 @@ namespace LocalizationTool
         public enum Language : int
         {
             Ukrainian = 0,
-            English = 1
+            English = 1,
+            Russian = 2,
         }
        
         private static Language CurrentLanguage = Language.Ukrainian;
        
         private static Dictionary<string, string> _localizedUA;
         private static Dictionary<string, string> _localizedEN;
+        private static Dictionary<string, string> _localizedRU;
        
         public static bool _isInitialized = false;
 
@@ -25,6 +27,7 @@ namespace LocalizationTool
 
             _localizedEN = loader.GetDictionaryValues("en");
             _localizedUA = loader.GetDictionaryValues("ua");
+            _localizedRU = loader.GetDictionaryValues("ru");
            
             _isInitialized = true;
         }
@@ -58,6 +61,9 @@ namespace LocalizationTool
                     break;
                 case Language.Ukrainian:
                     _localizedUA.TryGetValue(key, out value);
+                    break;
+                case Language.Russian:
+                    _localizedRU.TryGetValue(key, out value);
                     break;
             }
             return value;
