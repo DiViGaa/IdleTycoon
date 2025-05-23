@@ -15,6 +15,5 @@ namespace DialogsManager.Dialogs
             dialog.Initialize();
             base.BackToMenu();
         }
-        
     }
 }

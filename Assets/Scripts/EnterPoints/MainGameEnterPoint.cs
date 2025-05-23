@@ -1,4 +1,5 @@
 using System;
+using Camera;
 using DialogsManager;
 using DialogsManager.Dialogs;
 using JSON;
@@ -13,14 +14,16 @@ namespace EnterPoints
     public class MainGameEnterPoint : MonoBehaviour
     {
         [SerializeField] private GUIHolder guiHolder;
+        [SerializeField] private CameraMovement  cameraMovement;
         
         private SettingManager _settingManager;
         private AudioManager _audioManager;
         private JsonSetting _jsonSetting;
         
+        
         private GameUIDialog  _gameUIDialog;
         
-        public static UnityEvent OnUpdate;
+        public static Action OnUpdate;
         
         private void Start()
         {
@@ -40,13 +43,14 @@ namespace EnterPoints
 
         private void CreateGameUIDialog()
         {
-            var dialog = DialogManager.ShowDialog<GameUIDialog>();
-            dialog.Initialize();
+            _gameUIDialog = DialogManager.ShowDialog<GameUIDialog>();
+            _gameUIDialog.Initialize();
         }
 
         private void Initialize()
         {
             _settingManager.Initialize();
+            cameraMovement.Initialize();
         }
         
         private void Register()
@@ -63,7 +67,8 @@ namespace EnterPoints
 
         public void Dispose()
         {
-           
+            _gameUIDialog.Dispose();
+            cameraMovement.Dispose();
         }
     }
 }
