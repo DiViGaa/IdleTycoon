@@ -1,4 +1,5 @@
 using System;
+using Buildings;
 using Camera;
 using DialogsManager;
 using DialogsManager.Dialogs;
@@ -15,13 +16,12 @@ namespace EnterPoints
     {
         [SerializeField] private GUIHolder guiHolder;
         [SerializeField] private CameraMovement  cameraMovement;
+        [SerializeField] private BuildingManager  buildingManager;
         
         private SettingManager _settingManager;
         private AudioManager _audioManager;
         private JsonSetting _jsonSetting;
         private ProductCreator  _productCreator;
-        
-        
         private GameUIDialog  _gameUIDialog;
         
         public static Action OnUpdate;
@@ -54,6 +54,7 @@ namespace EnterPoints
             _settingManager.Initialize();
             cameraMovement.Initialize();
             _productCreator.Initialize();
+            buildingManager.Initialize();
         }
         
         private void Register()
@@ -65,6 +66,7 @@ namespace EnterPoints
             ServiceLocator.Current.Register<AudioManager>(_audioManager);
             ServiceLocator.Current.Register<SettingManager>(_settingManager);
             ServiceLocator.Current.Register<ProductCreator>(_productCreator);
+            ServiceLocator.Current.Register<BuildingManager>(buildingManager);
         }
         
         private void OnDisable() => Dispose();
@@ -73,6 +75,7 @@ namespace EnterPoints
         {
             _gameUIDialog.Dispose();
             cameraMovement.Dispose();
+            buildingManager.Dispose();
         }
     }
 }

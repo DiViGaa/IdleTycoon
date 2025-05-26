@@ -1,3 +1,7 @@
+using Buildings;
+using DialogsManager;
+using DialogsManager.Dialogs;
+using EnterPoints;
 using LocalizationTool;
 using ServicesLocator;
 using SoundManager;
@@ -18,9 +22,12 @@ namespace Shop
         
         [SerializeField] private TextLocaliserUI nameLocalizationKey;
         [SerializeField] private TextLocaliserUI descriptionLocalizationKey;
+        
+        private ProductData _productData;
 
         public void Initialize(ProductData product)
         {
+            _productData = product;
             productImage.sprite =  Resources.Load<Sprite>(product.PreliminaryPath);
             productName.text = product.Name;
             productPrice.text = product.Price.ToString();
@@ -33,7 +40,11 @@ namespace Shop
 
         private void Buy()
         {
+            var prefab =  Resources.Load<Building>(_productData.PrefabPath);
+            ServiceLocator.Current.Get<BuildingManager>().StartPlacingBuilding(prefab);
             ServiceLocator.Current.Get<AudioManager>().PlaySound("ui", "UI");
+            MainGameShopDialog.CloseEvent.Invoke();
+            DialogManager.ShowDialog<GameUIDialog>().Initialize();
         }
     }
 }

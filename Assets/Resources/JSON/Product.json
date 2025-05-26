@@ -6,7 +6,7 @@
     "DescriptionLocalizationKey": "officeDesc",
     "Price": 1000,
     "PreliminaryPath": "Previews/Office",
-    "PrefabPath": "Assets/Resources/Prefabs/Buildings/Office.prefab"
+    "PrefabPath": "Prefabs/Buildings/Office"
   },
   {
     "Name": "Extraction Facility",
@@ -15,7 +15,7 @@
     "DescriptionLocalizationKey": "mineDesc",
     "Price": 2500,
     "PreliminaryPath": "Previews/Mine",
-    "PrefabPath": "Assets/Resources/Prefabs/Buildings/Mine.prefab"
+    "PrefabPath": "Prefabs/Buildings/Mine"
   },
   {
     "Name": "Logistics Center",
@@ -24,7 +24,7 @@
     "DescriptionLocalizationKey": "storageDesc",
     "Price": 1500,
     "PreliminaryPath": "Previews/Storage",
-    "PrefabPath": "Assets/Resources/Prefabs/Buildings/Storage.prefab"
+    "PrefabPath": "Prefabs/Buildings/Storage"
   },
   {
     "Name": "Trade Terminal",
@@ -33,7 +33,7 @@
     "DescriptionLocalizationKey": "marketDesc",
     "Price": 3000,
     "PreliminaryPath": "Previews/Market",
-    "PrefabPath": "Assets/Resources/Prefabs/Buildings/Market.prefab"
+    "PrefabPath": "Prefabs/Buildings/Market"
   },
   {
     "Name": "Industrial Plant",
@@ -42,6 +42,6 @@
     "DescriptionLocalizationKey": "factoryDesc",
     "Price": 5000,
     "PreliminaryPath": "Previews/Factory",
-    "PrefabPath": "Assets/Resources/Prefabs/Buildings/Factory.prefab"
+    "PrefabPath": "Prefabs/Buildings/Factory"
   }
 ]

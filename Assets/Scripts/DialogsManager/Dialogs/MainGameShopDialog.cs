@@ -1,3 +1,4 @@
+using System;
 using ServicesLocator;
 using Shop;
 using SoundManager;
@@ -11,10 +12,13 @@ namespace DialogsManager.Dialogs
         [SerializeField] private Button closeButton;
         [SerializeField] private GameObject content;
 
+        public static Action CloseEvent;
+        
         public void Initialize()
         {
             closeButton.onClick.AddListener(CloseShop);
             ServiceLocator.Current.Get<ProductCreator>().CreateProducts(content);
+            CloseEvent += Close;
         }
 
         private void CloseShop()
@@ -23,6 +27,17 @@ namespace DialogsManager.Dialogs
             var dialog = DialogManager.ShowDialog<GameUIDialog>();
             dialog.Initialize();
             Hide();
+        }
+
+        private void Close()
+        {
+            Hide();
+        }
+
+        public override void Dispose()
+        {
+            CloseEvent -= Close;
+            base.Dispose();
         }
     }
 }
