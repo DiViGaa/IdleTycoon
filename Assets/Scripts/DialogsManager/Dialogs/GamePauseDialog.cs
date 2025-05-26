@@ -22,8 +22,10 @@ namespace DialogsManager.Dialogs
 
         private void Resume()
         {
-            Hide();
             ServiceLocator.Current.Get<AudioManager>().PlaySound("ui", "UI");
+            var dialog = DialogManager.ShowDialog<GameUIDialog>();
+            dialog.Initialize();
+            Hide();
         }
 
         private void ShowSettings()

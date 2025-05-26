@@ -12,11 +12,12 @@ namespace DialogsManager
         
         private static readonly Dictionary<Type, string> PrefabsDictionary = new Dictionary<Type, string>()
         {
-            {typeof(MainMenuDialog), "MainMenuDialog" },
-            {typeof(MainMenuSettingDialog), "MainMenuSettingDialog" },
-            {typeof(GameUIDialog), "GameUIDialog" },
-            {typeof(GamePauseDialog), "GamePauseDialog" },
-            {typeof(GameSettingDialog), "GameSettingDialog" },
+            {typeof(MainMenuSettingDialog), "MainMenuSettingDialog"},
+            {typeof(MainGameShopDialog), "MainGameShopDialog"},
+            {typeof(GameSettingDialog), "GameSettingDialog"},
+            {typeof(GamePauseDialog), "GamePauseDialog"},
+            {typeof(MainMenuDialog), "MainMenuDialog"},
+            {typeof(GameUIDialog), "GameUIDialog"},
         };
 
         public static T ShowDialog<T>() where T : Dialog

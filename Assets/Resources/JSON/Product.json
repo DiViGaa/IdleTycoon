@@ -1,0 +1,47 @@
+﻿[
+  {
+    "Name": "Administrative Complex",
+    "NameLocalizationKey": "officeName",
+    "Description": "Central office for strategic decisions. Increases overall efficiency and unlocks personnel management.",
+    "DescriptionLocalizationKey": "officeDesc",
+    "Price": 1000,
+    "PreliminaryPath": "Previews/Office",
+    "PrefabPath": "Assets/Resources/Prefabs/Buildings/Office.prefab"
+  },
+  {
+    "Name": "Extraction Facility",
+    "NameLocalizationKey": "mineName",
+    "Description": "Industrial facility for raw resource extraction. Ensures a steady supply of materials.",
+    "DescriptionLocalizationKey": "mineDesc",
+    "Price": 2500,
+    "PreliminaryPath": "Previews/Mine",
+    "PrefabPath": "Assets/Resources/Prefabs/Buildings/Mine.prefab"
+  },
+  {
+    "Name": "Logistics Center",
+    "NameLocalizationKey": "storageName",
+    "Description": "Modern automated storage. Increases resource capacity and optimizes distribution.",
+    "DescriptionLocalizationKey": "storageDesc",
+    "Price": 1500,
+    "PreliminaryPath": "Previews/Storage",
+    "PrefabPath": "Assets/Resources/Prefabs/Buildings/Storage.prefab"
+  },
+  {
+    "Name": "Trade Terminal",
+    "NameLocalizationKey": "marketName",
+    "Description": "Hub for preparing and dispatching goods to market. Boosts speed and profit of sales.",
+    "DescriptionLocalizationKey": "marketDesc",
+    "Price": 3000,
+    "PreliminaryPath": "Previews/Market",
+    "PrefabPath": "Assets/Resources/Prefabs/Buildings/Market.prefab"
+  },
+  {
+    "Name": "Industrial Plant",
+    "NameLocalizationKey": "factoryName",
+    "Description": "High-tech facility for advanced material processing. A core link in the production chain.",
+    "DescriptionLocalizationKey": "factoryDesc",
+    "Price": 5000,
+    "PreliminaryPath": "Previews/Factory",
+    "PrefabPath": "Assets/Resources/Prefabs/Buildings/Factory.prefab"
+  }
+]

@@ -5,9 +5,9 @@ using DialogsManager.Dialogs;
 using JSON;
 using ServicesLocator;
 using Settings;
+using Shop;
 using SoundManager;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace EnterPoints
 {
@@ -19,6 +19,7 @@ namespace EnterPoints
         private SettingManager _settingManager;
         private AudioManager _audioManager;
         private JsonSetting _jsonSetting;
+        private ProductCreator  _productCreator;
         
         
         private GameUIDialog  _gameUIDialog;
@@ -30,6 +31,7 @@ namespace EnterPoints
             _jsonSetting = new JsonSetting();
             _audioManager = new AudioManager();
             _settingManager = new SettingManager(_audioManager);
+            _productCreator = new ProductCreator();
             
             Register();
             CreateGameUIDialog();
@@ -51,6 +53,7 @@ namespace EnterPoints
         {
             _settingManager.Initialize();
             cameraMovement.Initialize();
+            _productCreator.Initialize();
         }
         
         private void Register()
@@ -61,6 +64,7 @@ namespace EnterPoints
             ServiceLocator.Current.Register<JsonSetting>(_jsonSetting);
             ServiceLocator.Current.Register<AudioManager>(_audioManager);
             ServiceLocator.Current.Register<SettingManager>(_settingManager);
+            ServiceLocator.Current.Register<ProductCreator>(_productCreator);
         }
         
         private void OnDisable() => Dispose();
