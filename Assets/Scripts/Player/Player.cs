@@ -28,7 +28,7 @@ namespace Player
             }
 
             GameUIDialog.UpdateUI?.Invoke();
-            PlayerDataIO.Save(Data);
+            ServicesLocator.ServiceLocator.Current.Get<PlayerDataIO>().Save(Data);
         }
 
         public bool HasEnough(ResourceType type, float requiredAmount)

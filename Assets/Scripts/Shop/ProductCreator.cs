@@ -12,7 +12,7 @@ namespace Shop
 
         public void Initialize()
         {
-            var products = JsonShopReader.LoadJson("Product.json");
+            var products = ServicesLocator.ServiceLocator.Current.Get<JsonShopReader>().LoadProducts();
 
             foreach (var product in products)
                 _productData.Add(product);

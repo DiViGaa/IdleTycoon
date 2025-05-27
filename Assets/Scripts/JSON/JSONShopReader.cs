@@ -1,22 +1,26 @@
 using System.Collections.Generic;
-using System.IO;
+using Interface;
 using Newtonsoft.Json;
 using Shop;
 using UnityEngine;
 
 namespace JSON
 {
-    public class JsonShopReader
+    public class JsonShopReader:IService
     {
-        public static List<ProductData> LoadJson(string fileName)
-        {
-            string url = string.Empty;
-            url = Application.dataPath + "/Resources/JSON/" + fileName;
+        private const string ResourcePath = "JSON/Product";
 
-            string json = File.ReadAllText(url);
-            
-            List<ProductData> upgrades = JsonConvert.DeserializeObject<List<ProductData>>(json);
-            return upgrades;
+        public List<ProductData> LoadProducts()
+        {
+            TextAsset jsonFile = Resources.Load<TextAsset>(ResourcePath);
+
+            if (jsonFile == null)
+            {
+                Debug.LogError($"[LOAD] Failed to load JSON from Resources at path: {ResourcePath}");
+                return new List<ProductData>();
+            }
+
+            return JsonConvert.DeserializeObject<List<ProductData>>(jsonFile.text);
         }
     }
 }

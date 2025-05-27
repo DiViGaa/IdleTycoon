@@ -18,7 +18,7 @@ namespace Settings
 
         public void Initialize()
         {
-            _settingData = ServiceLocator.Current.Get<JsonSetting>().LoadJson("Setting.json");
+            _settingData = ServiceLocator.Current.Get<JsonSetting>().Load();
 
             LocalizationSystem.SetLanguageByIndex(_settingData.LanguageIndex);
             _soundManager.Initialize(_settingData.MusicVolume, _settingData.UIVolume);
@@ -26,7 +26,7 @@ namespace Settings
 
         public void Save()
         {
-            ServiceLocator.Current.Get<JsonSetting>().SaveJson("Setting.json", _settingData);
+            ServiceLocator.Current.Get<JsonSetting>().Save(_settingData);
         }
 
         public void SwitchLanguage(int languageIndex)
