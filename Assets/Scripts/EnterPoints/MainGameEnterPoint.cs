@@ -23,6 +23,7 @@ namespace EnterPoints
         private JsonSetting _jsonSetting;
         private ProductCreator  _productCreator;
         private GameUIDialog  _gameUIDialog;
+        private Player.Player _player;
         
         public static Action OnUpdate;
         
@@ -32,6 +33,7 @@ namespace EnterPoints
             _audioManager = new AudioManager();
             _settingManager = new SettingManager(_audioManager);
             _productCreator = new ProductCreator();
+            _player = new Player.Player(PlayerDataIO.Load());
             
             Register();
             CreateGameUIDialog();
@@ -67,6 +69,7 @@ namespace EnterPoints
             ServiceLocator.Current.Register<SettingManager>(_settingManager);
             ServiceLocator.Current.Register<ProductCreator>(_productCreator);
             ServiceLocator.Current.Register<BuildingManager>(buildingManager);
+            ServiceLocator.Current.Register<Player.Player>(_player);
         }
         
         private void OnDisable() => Dispose();

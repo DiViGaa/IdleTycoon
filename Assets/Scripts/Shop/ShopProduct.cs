@@ -3,6 +3,7 @@ using DialogsManager;
 using DialogsManager.Dialogs;
 using EnterPoints;
 using LocalizationTool;
+using Player;
 using ServicesLocator;
 using SoundManager;
 using TMPro;
@@ -35,6 +36,11 @@ namespace Shop
             nameLocalizationKey.SetKey(product.NameLocalizationKey);
             descriptionLocalizationKey.SetKey(product.DescriptionLocalizationKey);
             
+            float playerCoins = ServiceLocator.Current.Get<Player.Player>().GetResource(ResourceType.Coins);
+            bool canAfford = playerCoins >= _productData.Price;
+            
+            buyButton.interactable = canAfford;
+            
             buyButton.onClick.AddListener(Buy);
         }
 
@@ -45,6 +51,7 @@ namespace Shop
             ServiceLocator.Current.Get<AudioManager>().PlaySound("ui", "UI");
             MainGameShopDialog.CloseEvent.Invoke();
             DialogManager.ShowDialog<GameUIDialog>().Initialize();
+            ServiceLocator.Current.Get<Player.Player>().ChangeResource(ResourceType.Coins, -_productData.Price);
         }
     }
 }

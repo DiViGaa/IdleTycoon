@@ -1,19 +1,37 @@
+using JSON;
+using Player;
 using ServicesLocator;
 using SoundManager;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace DialogsManager.Dialogs
 {
     public class GameUIDialog : Dialog
     {
-        [SerializeField] private Button _pauseButton;
-        [SerializeField] private Button _shopButton;
+        [SerializeField] private Button pauseButton;
+        [SerializeField] private Button shopButton;
+
+        [SerializeField] private TextMeshProUGUI cenoxiumTextMeshProUGUI;
+        [SerializeField] private TextMeshProUGUI crysalorTextMeshProUGUI;
+        [SerializeField] private TextMeshProUGUI thaloriteTextMeshProUGUI;
+        [SerializeField] private TextMeshProUGUI velorithTextMeshProUGUI;
+        [SerializeField] private TextMeshProUGUI zenthiteTextMeshProUGUI;
+        [SerializeField] private TextMeshProUGUI coinTextMeshProUGUI;
+
+        public static UnityAction UpdateUI;
+
 
         public void Initialize()
         {
-            _pauseButton.onClick.AddListener(ShowPauseDialog);
-            _shopButton.onClick.AddListener(ShowShopDialog);
+
+            pauseButton.onClick.AddListener(ShowPauseDialog);
+            shopButton.onClick.AddListener(ShowShopDialog);
+
+            UpdateUI += UpdateResourceUI;
+            UpdateResourceUI();
         }
 
         private void ShowShopDialog()
@@ -32,9 +50,21 @@ namespace DialogsManager.Dialogs
             Hide();
         }
 
+        private void UpdateResourceUI()
+        {
+            cenoxiumTextMeshProUGUI.text = ServiceLocator.Current.Get<Player.Player>().GetResource(ResourceType.Cenoxium).ToString("F0");
+            crysalorTextMeshProUGUI.text = ServiceLocator.Current.Get<Player.Player>().GetResource(ResourceType.Crysalor).ToString("F0");
+            thaloriteTextMeshProUGUI.text = ServiceLocator.Current.Get<Player.Player>().GetResource(ResourceType.Thalorite).ToString("F0");
+            velorithTextMeshProUGUI.text = ServiceLocator.Current.Get<Player.Player>().GetResource(ResourceType.Velorith).ToString("F0");
+            zenthiteTextMeshProUGUI.text = ServiceLocator.Current.Get<Player.Player>().GetResource(ResourceType.Zenthite).ToString("F0");
+            coinTextMeshProUGUI.text = ServiceLocator.Current.Get<Player.Player>().GetResource(ResourceType.Coins).ToString("F0");
+        }
+
         public override void Dispose()
         {
-            _pauseButton.onClick.RemoveAllListeners();
+            pauseButton.onClick.RemoveAllListeners();
+            shopButton.onClick.RemoveAllListeners();
+            UpdateUI -= UpdateResourceUI;
             base.Dispose();
         }
     }
