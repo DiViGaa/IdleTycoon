@@ -9,13 +9,31 @@
     "PrefabPath": "Prefabs/Buildings/Office"
   },
   {
-    "Name": "Extraction Facility",
-    "NameLocalizationKey": "mineName",
-    "Description": "Industrial facility for raw resource extraction. Ensures a steady supply of materials.",
-    "DescriptionLocalizationKey": "mineDesc",
-    "Price": 2500,
-    "PreliminaryPath": "Previews/Mine",
-    "PrefabPath": "Prefabs/Buildings/Mine"
+    "Name": "Crysalor Mine",
+    "NameLocalizationKey": "mineCrysalorName",
+    "Description": "Facility dedicated to the extraction of rare Crysalor crystals. Vital for high-tier tech.",
+    "DescriptionLocalizationKey": "mineCrysalorDesc",
+    "Price": 3200,
+    "PreliminaryPath": "Previews/MineCrysalor",
+    "PrefabPath": "Prefabs/Buildings/MineCrysalor"
+  },
+  {
+    "Name": "Velorith Mine",
+    "NameLocalizationKey": "mineVelorithName",
+    "Description": "Specialized mine extracting Velorith, an energy-dense mineral used in advanced systems.",
+    "DescriptionLocalizationKey": "mineVelorithDesc",
+    "Price": 3400,
+    "PreliminaryPath": "Previews/MineVelorith",
+    "PrefabPath": "Prefabs/Buildings/MineVelorith"
+  },
+  {
+    "Name": "Zenthite Mine",
+    "NameLocalizationKey": "mineZenthiteName",
+    "Description": "Deep-core mine for rare Zenthite ore. Crucial for elite construction projects.",
+    "DescriptionLocalizationKey": "mineZenthiteDesc",
+    "Price": 3800,
+    "PreliminaryPath": "Previews/MineZenthite",
+    "PrefabPath": "Prefabs/Buildings/MineZenthite"
   },
   {
     "Name": "Logistics Center",

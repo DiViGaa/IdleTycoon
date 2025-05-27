@@ -45,6 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2f1d00d397478d4a9f88c18270c4f4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowedBuildLayers:
+    serializedVersion: 2
+    m_Bits: 8
   size: {x: 25, y: 11}
 --- !u!1001 &6091548577102219762
 PrefabInstance:
