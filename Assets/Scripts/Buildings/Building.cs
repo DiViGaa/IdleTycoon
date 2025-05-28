@@ -1,14 +1,24 @@
 using System.Collections.Generic;
 using UnityEngine;
+using DialogsManager;
+using DialogsManager.Dialogs;
+using Upgrade;
+using ServicesLocator;
 
 namespace Buildings
 {
-    public class Building : BuildingBase
+    public class Building : MonoBehaviour, IInteractable
     {
+        [SerializeField] private string buildingId;
         [SerializeField] private LayerMask allowedBuildLayers;
         [SerializeField] private Vector2Int size = Vector2Int.one;
+
         public Vector2Int Size => size;
         public LayerMask AllowedBuildLayers => allowedBuildLayers;
+        public string BuildingId => buildingId;
+
+        protected BuildingUpgradeState upgradeState;
+        protected UpgradeManager upgradeManager;
 
         private List<Renderer> _renderers = new List<Renderer>();
         private MaterialPropertyBlock _propertyBlock;
@@ -20,6 +30,36 @@ namespace Buildings
         {
             _renderers.AddRange(GetComponentsInChildren<Renderer>());
             _propertyBlock = new MaterialPropertyBlock();
+        }
+
+        private void Start()
+        {
+            upgradeManager = ServiceLocator.Current.Get<UpgradeManager>();
+            upgradeState = upgradeManager.GetUpgrade(buildingId);
+        }
+
+        public int UpgradeLevel => upgradeState.Level;
+        public int UpgradeCost => upgradeState.UpgradeCost;
+
+        public bool TryUpgrade(int playerCoins)
+        {
+            if (upgradeManager.TryUpgrade(buildingId, playerCoins))
+            {
+                upgradeState = upgradeManager.GetUpgrade(buildingId);
+                OnUpgraded();
+                return true;
+            }
+            return false;
+        }
+
+        protected virtual void OnUpgraded()
+        {
+            Debug.Log($"{buildingId} upgraded to level {upgradeState.Level}");
+        }
+
+        public virtual string GetUpgradeInfo()
+        {
+            return $"Level: {UpgradeLevel}";
         }
 
         public void SetTransparent(bool available)
@@ -63,9 +103,10 @@ namespace Buildings
             }
         }
 
-        public override string GetUpgradeInfo()
+        public virtual void OnInteract()
         {
-            throw new System.NotImplementedException();
+            var dialog = DialogManager.ShowDialog<BuildingUpgradeDialog>();
+            dialog.Initialize(this);
         }
     }
 }

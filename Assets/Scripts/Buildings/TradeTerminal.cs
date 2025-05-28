@@ -1,6 +1,6 @@
 namespace Buildings
 {
-    public class TradeTerminal : BuildingBase
+    public class TradeTerminal : Building
     {
         public override string GetUpgradeInfo()
         {

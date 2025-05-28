@@ -168,7 +168,6 @@ namespace Buildings
             {
                 BuildingId = _flyingBuilding.BuildingId,
                 Position = new Vector2Int(placeX, placeY),
-                UpgradeLevel = _flyingBuilding.UpgradeLevel
             });
             SaveBuildings();
             _flyingBuilding = null;
@@ -219,11 +218,7 @@ namespace Buildings
                 building.transform.position = new Vector3(saved.Position.x, 0, saved.Position.y);
                 building.gameObject.isStatic = true;
                 Debug.Log($"[LoadBuildings] Instantiated {saved.BuildingId} at {saved.Position}");
-
-                var upgradeManager = ServiceLocator.Current.Get<UpgradeManager>();
-                var upgrade = upgradeManager.GetUpgrade(saved.BuildingId);
-                upgrade.Level = saved.UpgradeLevel;
-
+                
                 for (int x = 0; x < building.Size.x; x++)
                 for (int y = 0; y < building.Size.y; y++)
                     grid[saved.Position.x + x, saved.Position.y + y] = building;

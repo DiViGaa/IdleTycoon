@@ -23,6 +23,12 @@ namespace Upgrade
 
         private const string FileName = "building_upgrades.json";
         private string FilePath => Path.Combine(Application.persistentDataPath, FileName);
+        
+        private JsonSerializerSettings _jsonSettings = new JsonSerializerSettings
+        {
+            TypeNameHandling = TypeNameHandling.Auto
+        };
+
 
         public void Initialize()
         {
@@ -67,26 +73,28 @@ namespace Upgrade
 
         public void Save()
         {
-            string json = JsonConvert.SerializeObject(_upgradeStates, Formatting.Indented);
+            string json = JsonConvert.SerializeObject(_upgradeStates, Formatting.Indented, _jsonSettings);
             File.WriteAllText(FilePath, json);
             Debug.Log($"[UpgradeManager] Data saved to {FilePath}");
         }
+
 
         public void Load()
         {
             if (File.Exists(FilePath))
             {
                 string json = File.ReadAllText(FilePath);
-                _upgradeStates = JsonConvert.DeserializeObject<Dictionary<string, BuildingUpgradeState>>(json);
+                _upgradeStates = JsonConvert.DeserializeObject<Dictionary<string, BuildingUpgradeState>>(json, _jsonSettings);
                 Debug.Log("[UpgradeManager] Data loaded.");
             }
             else
             {
                 _upgradeStates = new Dictionary<string, BuildingUpgradeState>();
-                Save(); // создаем новый файл
+                Save();
                 Debug.Log("[UpgradeManager] New upgrade save file created.");
             }
         }
+
 
         public void ResetAll()
         {

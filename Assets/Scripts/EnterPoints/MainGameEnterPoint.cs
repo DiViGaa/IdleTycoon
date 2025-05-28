@@ -65,6 +65,7 @@ namespace EnterPoints
             _settingManager.Initialize();
             cameraMovement.Initialize();
             _productCreator.Initialize();
+            _upgradeManager.Initialize();
             buildingManager.Initialize();
             _buildingClickHandler.Initialize();
         }

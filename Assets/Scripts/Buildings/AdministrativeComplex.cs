@@ -1,6 +1,6 @@
 namespace Buildings
 {
-    public class AdministrativeComplex : BuildingBase
+    public class AdministrativeComplex : Building
     {
         public override string GetUpgradeInfo()
         {

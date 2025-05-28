@@ -1,6 +1,6 @@
 namespace Buildings
 {
-    public class IndustrialPlant : BuildingBase
+    public class IndustrialPlant : Building
     {
         public override string GetUpgradeInfo()
         {

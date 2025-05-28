@@ -1,6 +1,6 @@
 namespace Buildings
 {
-    public class MineBuilding : BuildingBase
+    public class MineBuilding : Building
     {
         private MineUpgradeState Mine => (MineUpgradeState)upgradeState;
 

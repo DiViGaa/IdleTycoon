@@ -14,10 +14,10 @@ namespace DialogsManager.Dialogs
         [SerializeField] private Button upgradeButton;
         [SerializeField] private Button closeButton;
 
-        private BuildingBase _building;
+        private Building _building;
         private Player.Player _player;
 
-        public void Initialize(BuildingBase building)
+        public void Initialize(Building building)
         {
             _building = building;
             _player = ServiceLocator.Current.Get<Player.Player>();

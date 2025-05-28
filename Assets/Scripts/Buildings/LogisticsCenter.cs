@@ -1,6 +1,6 @@
 namespace Buildings
 {
-    public class LogisticsCenter : BuildingBase
+    public class LogisticsCenter : Building
     {
         public override string GetUpgradeInfo()
         {
