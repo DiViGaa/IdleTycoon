@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3082217353825243634}
   - component: {fileID: 7075816175278905120}
+  - component: {fileID: 639092244693026561}
+  - component: {fileID: -5441772956252793573}
   m_Layer: 0
   m_Name: MineCrysalor
   m_TagString: Untagged
@@ -45,10 +47,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2f1d00d397478d4a9f88c18270c4f4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buildingId: MineCrysalor
   allowedBuildLayers:
     serializedVersion: 2
     m_Bits: 256
   size: {x: 14, y: 10}
+--- !u!114 &639092244693026561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6417097309453870232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b3ca56ec684f6b47a31f580bb7269be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildingId: MineCrysalor
+--- !u!65 &-5441772956252793573
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6417097309453870232}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 14.04964, y: 16.86533, z: 10.042694}
+  m_Center: {x: 6.52482, y: 3.9257207, z: 4.521349}
 --- !u!1001 &5059426021092238822
 PrefabInstance:
   m_ObjectHideFlags: 0

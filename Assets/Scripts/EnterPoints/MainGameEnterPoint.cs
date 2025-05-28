@@ -9,6 +9,7 @@ using Settings;
 using Shop;
 using SoundManager;
 using UnityEngine;
+using Upgrade;
 
 namespace EnterPoints
 {
@@ -26,6 +27,8 @@ namespace EnterPoints
         private Player.Player _player;
         private JsonShopReader _jsonShopReader;
         private PlayerDataIO  _playerDataIO;
+        private UpgradeManager _upgradeManager;
+        private BuildingClickHandler _buildingClickHandler;
         
         public static Action OnUpdate;
         
@@ -37,6 +40,8 @@ namespace EnterPoints
             _audioManager = new AudioManager();
             _settingManager = new SettingManager(_audioManager);
             _productCreator = new ProductCreator();
+            _upgradeManager = new UpgradeManager();
+            _buildingClickHandler = new BuildingClickHandler();
             _player = new Player.Player(_playerDataIO.Load());
             
             Register();
@@ -61,6 +66,7 @@ namespace EnterPoints
             cameraMovement.Initialize();
             _productCreator.Initialize();
             buildingManager.Initialize();
+            _buildingClickHandler.Initialize();
         }
         
         private void Register()
@@ -76,6 +82,8 @@ namespace EnterPoints
             ServiceLocator.Current.Register<Player.Player>(_player);
             ServiceLocator.Current.Register<JsonShopReader>(_jsonShopReader);
             ServiceLocator.Current.Register<PlayerDataIO>(_playerDataIO);
+            ServiceLocator.Current.Register<UpgradeManager>(_upgradeManager);
+            ServiceLocator.Current.Register<BuildingClickHandler>(_buildingClickHandler);
         }
         
         private void OnDisable() => Dispose();

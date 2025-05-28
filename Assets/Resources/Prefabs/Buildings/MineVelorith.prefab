@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3082217353825243634}
   - component: {fileID: 7075816175278905120}
+  - component: {fileID: -3732248426520832711}
+  - component: {fileID: -1356126205037352197}
   m_Layer: 0
   m_Name: MineVelorith
   m_TagString: Untagged
@@ -45,10 +47,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2f1d00d397478d4a9f88c18270c4f4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buildingId: MineVelorith
   allowedBuildLayers:
     serializedVersion: 2
     m_Bits: 128
   size: {x: 14, y: 10}
+--- !u!114 &-3732248426520832711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6417097309453870232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b3ca56ec684f6b47a31f580bb7269be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildingId: MineVelorith
+--- !u!65 &-1356126205037352197
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6417097309453870232}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 14.1449795, y: 16.859625, z: 10.20497}
+  m_Center: {x: 6.572489, y: 3.8888674, z: 4.602485}
 --- !u!1001 &5059426021092238822
 PrefabInstance:
   m_ObjectHideFlags: 0

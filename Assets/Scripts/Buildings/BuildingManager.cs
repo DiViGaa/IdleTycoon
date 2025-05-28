@@ -1,22 +1,33 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
 using EnterPoints;
 using Interface;
+using Newtonsoft.Json;
+using ServicesLocator;
 using UnityEngine;
+using Upgrade;
 
 namespace Buildings
 {
     public class BuildingManager : MonoBehaviour, IService, IDisposable
     {
         [SerializeField] Vector2Int GridSize = new Vector2Int(10, 10);
+        [SerializeField] private List<Building> availablePrefabs;
 
         private Building[,] grid;
         private Building _flyingBuilding;
         private UnityEngine.Camera mainCamera;
-    
+        private List<SavedBuildingData> _savedBuildings = new();
+        private string SavePath => Path.Combine(Application.persistentDataPath, "buildings.json");
+
+
+        
         public void Initialize()
         {
             MainGameEnterPoint.OnUpdate += OnUpdate;
             grid = new Building[GridSize.x, GridSize.y];
+            LoadBuildings();
             mainCamera = UnityEngine.Camera.main;
         }
 
@@ -153,6 +164,13 @@ namespace Buildings
             
             _flyingBuilding.SetNormal();
             _flyingBuilding.gameObject.isStatic = true;
+            _savedBuildings.Add(new SavedBuildingData
+            {
+                BuildingId = _flyingBuilding.BuildingId,
+                Position = new Vector2Int(placeX, placeY),
+                UpgradeLevel = _flyingBuilding.UpgradeLevel
+            });
+            SaveBuildings();
             _flyingBuilding = null;
         }
         
@@ -168,5 +186,67 @@ namespace Buildings
             grid = null;
             mainCamera = null;
         }
+        
+        public void LoadBuildings()
+        {
+            if (!File.Exists(SavePath))
+            {
+                Debug.Log("[BuildingManager] No building save file found.");
+                return;
+            }
+
+            string json = File.ReadAllText(SavePath);
+            var wrapper = JsonUtility.FromJson<SavedBuildingsWrapper>(json);
+    
+            if (wrapper == null || wrapper.Buildings == null)
+            {
+                Debug.LogWarning("[BuildingManager] Failed to deserialize buildings.");
+                return;
+            }
+
+            foreach (var saved in wrapper.Buildings)
+            {
+                Debug.Log($"[LoadBuildings] Try loading: {saved.BuildingId} at {saved.Position}");
+
+                var prefab = GetBuildingPrefabById(saved.BuildingId);
+                if (prefab == null)
+                {
+                    Debug.LogWarning($"[LoadBuildings] Prefab with ID '{saved.BuildingId}' not found.");
+                    continue;
+                }
+
+                var building = Instantiate(prefab);
+                building.transform.position = new Vector3(saved.Position.x, 0, saved.Position.y);
+                building.gameObject.isStatic = true;
+                Debug.Log($"[LoadBuildings] Instantiated {saved.BuildingId} at {saved.Position}");
+
+                var upgradeManager = ServiceLocator.Current.Get<UpgradeManager>();
+                var upgrade = upgradeManager.GetUpgrade(saved.BuildingId);
+                upgrade.Level = saved.UpgradeLevel;
+
+                for (int x = 0; x < building.Size.x; x++)
+                for (int y = 0; y < building.Size.y; y++)
+                    grid[saved.Position.x + x, saved.Position.y + y] = building;
+            }
+
+
+            _savedBuildings = wrapper.Buildings;
+            Debug.Log($"[BuildingManager] Loaded {_savedBuildings.Count} buildings.");
+        }
+
+        
+        private Building GetBuildingPrefabById(string id)
+        {
+            return availablePrefabs.Find(b => b.BuildingId == id);
+        }
+        
+        public void SaveBuildings()
+        {
+            var wrapper = new SavedBuildingsWrapper { Buildings = _savedBuildings };
+            string json = JsonUtility.ToJson(wrapper, true);
+            File.WriteAllText(SavePath, json);
+            Debug.Log("[BuildingManager] Saved " + _savedBuildings.Count + " buildings.");
+        }
+
     }
 }

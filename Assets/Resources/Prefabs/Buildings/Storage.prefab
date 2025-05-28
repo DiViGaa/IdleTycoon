@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5331116454008833813}
   - component: {fileID: -2640556010574588998}
+  - component: {fileID: -1348645404412627007}
+  - component: {fileID: 1585254990579685135}
   m_Layer: 0
   m_Name: Storage
   m_TagString: Untagged
@@ -45,10 +47,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2f1d00d397478d4a9f88c18270c4f4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buildingId: Storage
   allowedBuildLayers:
     serializedVersion: 2
     m_Bits: 8
   size: {x: 20, y: 11}
+--- !u!114 &-1348645404412627007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4988797702854181079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfaaa810cf453aa458eec2ce54c28a5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildingId: Storage
+--- !u!65 &1585254990579685135
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4988797702854181079}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 21.907314, y: 9.019243, z: 11.024053}
+  m_Center: {x: 10.453657, y: 4.0096216, z: 5.0120263}
 --- !u!1001 &8329580077787789938
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5610138428356180330}
   - component: {fileID: -3507567792338437096}
+  - component: {fileID: 3343006124035632382}
+  - component: {fileID: 1421033054661978063}
   m_Layer: 0
   m_Name: Office
   m_TagString: Untagged
@@ -45,10 +47,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2f1d00d397478d4a9f88c18270c4f4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buildingId: Office
   allowedBuildLayers:
     serializedVersion: 2
     m_Bits: 8
   size: {x: 11, y: 10}
+--- !u!114 &3343006124035632382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4923151206723806720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c4af81aad7151c45bad016a3d19302c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildingId: Office
+--- !u!65 &1421033054661978063
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4923151206723806720}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 11.087261, y: 9.268245, z: 10.09507}
+  m_Center: {x: 5.0436306, y: 4.1341233, z: 4.547535}
 --- !u!1001 &2055620510222699064
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Buildings
 {
-    public class Building : MonoBehaviour
+    public class Building : BuildingBase
     {
         [SerializeField] private LayerMask allowedBuildLayers;
         [SerializeField] private Vector2Int size = Vector2Int.one;
@@ -61,6 +61,11 @@ namespace Buildings
                     Gizmos.DrawCube(transform.position + new Vector3(x, 0, y), new Vector3(1, .1f, 1));
                 }
             }
+        }
+
+        public override string GetUpgradeInfo()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
