@@ -51,6 +51,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   size: {x: 14, y: 10}
+  mineType: 3
 --- !u!65 &-1356126205037352197
 BoxCollider:
   m_ObjectHideFlags: 0

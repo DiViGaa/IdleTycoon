@@ -1,19 +1,14 @@
+using Player;
 using UnityEngine;
 using Upgrade;
 
-public enum MineType
-{
-    Crysalor,
-    Velorith,
-    Zenthite
-}
 
 [System.Serializable]
 public class MineUpgradeState : BuildingUpgradeState
 {
-    public MineType MineType;
+    public ResourceType MineType;
     
-    public float ExtractionRate = 1.0f;
+    public float ExtractionRate = 5.0f;
     public float StorageBuffer = 50f;
 
     public void Upgrade()

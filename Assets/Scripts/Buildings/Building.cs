@@ -32,7 +32,7 @@ namespace Buildings
             _propertyBlock = new MaterialPropertyBlock();
         }
 
-        private void Start()
+        public virtual void Start()
         {
             upgradeManager = ServiceLocator.Current.Get<UpgradeManager>();
             upgradeState = upgradeManager.GetUpgrade(buildingId);
