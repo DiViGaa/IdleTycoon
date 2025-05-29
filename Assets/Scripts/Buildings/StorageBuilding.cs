@@ -61,6 +61,13 @@ namespace Buildings
             if (val < amount) return false;
 
             _storage[type] -= amount;
+
+            var player = ServicesLocator.ServiceLocator.Current.Get<Player.Player>();
+            if (player != null)
+            {
+                player.ChangeResource(type, -amount);
+            }
+
             return true;
         }
 

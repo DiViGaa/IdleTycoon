@@ -127,8 +127,7 @@ public class NPCSpawner : MonoBehaviour
                 case LogisticTargetType.Factory:
                     return b.GetComponent<FactoryBuilding>() != null;
                 case LogisticTargetType.Market:
-                    // TODO: добавить поддержку рынка
-                    return false;
+                    return b.GetComponent<MarketBuilding>() != null;
                 default:
                     return false;
             }

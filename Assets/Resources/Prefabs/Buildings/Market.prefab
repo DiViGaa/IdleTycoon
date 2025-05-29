@@ -42,7 +42,6 @@ GameObject:
   - component: {fileID: 5152150732689535953}
   - component: {fileID: 13299314327870428}
   - component: {fileID: 5848919262942942067}
-  - component: {fileID: 9189608773157929658}
   m_Layer: 10
   m_Name: Market
   m_TagString: Untagged
@@ -108,22 +107,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 25.08229, y: 8.788079, z: 10.942228}
   m_Center: {x: 12.041145, y: 3.8940396, z: 4.971114}
---- !u!114 &9189608773157929658
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7227784423217810255}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57f65f3cbd5463d419f13d268802464a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  npcPrefab: {fileID: 1989016840586762202, guid: d65297e77eae00744a5e699934f25e74, type: 3}
-  spawnPoint: {fileID: 660419227195691410}
-  sourceBuilding: {fileID: 13299314327870428}
-  transportSettings: []
 --- !u!1001 &2125823731497826655
 PrefabInstance:
   m_ObjectHideFlags: 0

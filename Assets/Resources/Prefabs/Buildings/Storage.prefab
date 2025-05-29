@@ -130,6 +130,12 @@ MonoBehaviour:
   - Resource: 3
     TargetType: 1
     CarryAmount: 10
+  - Resource: 0
+    TargetType: 2
+    CarryAmount: 10
+  - Resource: 2
+    TargetType: 2
+    CarryAmount: 10
 --- !u!1001 &8329580077787789938
 PrefabInstance:
   m_ObjectHideFlags: 0
