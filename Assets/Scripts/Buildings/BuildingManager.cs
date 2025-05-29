@@ -173,12 +173,6 @@ namespace Buildings
             _flyingBuilding = null;
         }
         
-        private void OnDrawGizmos()
-        {
-            Gizmos.DrawCube(transform.position, new Vector3(GridSize.x, 1, GridSize.y));
-            Gizmos.color = new Color(Color.green.r, Color.green.g, Color.green.b, 0.5f);
-        }
-
         public void Dispose()
         {
             MainGameEnterPoint.OnUpdate -= OnUpdate;

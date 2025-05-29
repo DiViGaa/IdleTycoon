@@ -1,17 +1,21 @@
+using Interface;
 using Player;
 using UnityEngine;
 
 namespace Buildings
 {
-    public class MineBuilding : Building
+    public class MineBuilding : Building, IResourceProvider
     {
+        [Header("Тип ресурса")]
         [SerializeField] private ResourceType mineType;
 
-        private float _timer;
-        private float _storedResources;
+        private float _storedResources = 0f;
+        private float _extractionTimer = 0f;
         private float _extractionInterval = 1f;
 
         private MineUpgradeState Mine => (MineUpgradeState)upgradeState;
+
+        public ResourceType MineType => mineType;
 
         public override void Start()
         {
@@ -23,50 +27,52 @@ namespace Buildings
             }
             else
             {
-                Debug.LogError($"{BuildingId} has invalid upgrade state type.");
+                Debug.LogError($"{BuildingId} имеет неверное состояние апгрейда.");
             }
         }
 
         private void Update()
         {
-            _timer += Time.deltaTime;
-            if (_timer >= _extractionInterval)
+            _extractionTimer += Time.deltaTime;
+            if (_extractionTimer >= _extractionInterval)
             {
-                _timer = 0;
+                _extractionTimer = 0f;
                 ExtractResource();
-            }
-
-            if (_storedResources >= Mine.StorageBuffer)
-            {
-                ServicesLocator.ServiceLocator.Current.Get<Player.Player>().ChangeResource(mineType, +Collect());
             }
         }
 
         private void ExtractResource()
         {
-            if (_storedResources < Mine.StorageBuffer)
-            {
-                _storedResources += Mine.ExtractionRate;
-                _storedResources = Mathf.Min(_storedResources, Mine.StorageBuffer);
+            float extractionRate = Mine.ExtractionRate;
+            float buffer = Mine.StorageBuffer;
 
-                Debug.Log($"{BuildingId} Mine {Mine.MineType}: +{Mine.ExtractionRate} | " +
-                          $"Save: {_storedResources}/{Mine.StorageBuffer}");
+            if (_storedResources < buffer)
+            {
+                _storedResources += extractionRate;
+                _storedResources = Mathf.Min(_storedResources, buffer);
+
+                Debug.Log($"{BuildingId} → добыто: +{extractionRate} {mineType}. Текущее: {_storedResources}/{buffer}");
             }
         }
-
-        public float Collect()
+        
+        public float GetAmount(ResourceType type)
         {
-            float collected = _storedResources;
-            _storedResources = 0;
-            return collected;
+            return type == mineType ? _storedResources : 0f;
         }
 
-        public float GetStoredResources() => _storedResources;
+        public bool TryTakeResource(ResourceType type, float amount)
+        {
+            if (type != mineType) return false;
+            if (_storedResources < amount) return false;
+
+            _storedResources -= amount;
+            return true;
+        }
 
         public override string GetUpgradeInfo()
         {
             return $"Level: {UpgradeLevel}\n" +
-                   $"Mining Speed: {Mine.ExtractionRate}\n" +
+                   $"Mining Speed: {Mine.ExtractionRate} / sec\n" +
                    $"Storage Buffer: {Mine.StorageBuffer}";
         }
 

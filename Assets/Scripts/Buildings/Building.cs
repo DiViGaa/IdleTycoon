@@ -13,6 +13,8 @@ namespace Buildings
         [SerializeField] private LayerMask allowedBuildLayers;
         [SerializeField] private Vector2Int size = Vector2Int.one;
 
+        [SerializeField] private LayerMask removeOnStartLayers;
+
         public Vector2Int Size => size;
         public LayerMask AllowedBuildLayers => allowedBuildLayers;
         public string BuildingId => buildingId;
@@ -34,8 +36,29 @@ namespace Buildings
 
         public virtual void Start()
         {
+            RemoveIntersectingObjects();
+
             upgradeManager = ServiceLocator.Current.Get<UpgradeManager>();
             upgradeState = upgradeManager.GetUpgrade(buildingId);
+        }
+
+        private void RemoveIntersectingObjects()
+        {
+            float height = 3f;
+
+            Vector3 center = transform.position + new Vector3(size.x / 2f, height / 2f, size.y / 2f);
+            Vector3 halfExtents = new Vector3(size.x / 2f, height / 2f, size.y / 2f);
+
+            Collider[] overlappingColliders = Physics.OverlapBox(center, halfExtents, Quaternion.identity, removeOnStartLayers);
+
+            foreach (var col in overlappingColliders)
+            {
+                if (col.gameObject == this.gameObject)
+                    continue;
+
+                Debug.Log($"Удаляем пересекающийся объект {col.gameObject.name} на слое {LayerMask.LayerToName(col.gameObject.layer)}");
+                Destroy(col.gameObject);
+            }
         }
 
         public int UpgradeLevel => upgradeState.Level;
