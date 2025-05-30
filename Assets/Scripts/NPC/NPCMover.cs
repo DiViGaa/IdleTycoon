@@ -1,10 +1,10 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace NPC
 {
-    [RequireComponent(typeof(Rigidbody))]
     public class NPCMover : MonoBehaviour
     {
         [SerializeField] private float speed = 3f;
@@ -15,13 +15,14 @@ namespace NPC
         [SerializeField] private float npcAvoidanceStrength = 1.0f;
         [SerializeField] private LayerMask obstacleMask;
         [SerializeField] private LayerMask npcLayer;
+        [SerializeField] private Animator animator;
 
         private Vector3 _targetPosition;
         private bool _isMoving = false;
         private Action _onArrived;
 
         private const float MaxMoveTime = 10f;
-
+        
         public void MoveTo(Vector3 targetPosition, Action onArrived)
         {
             _targetPosition = targetPosition;
@@ -35,6 +36,9 @@ namespace NPC
         {
             _isMoving = true;
             float elapsed = 0f;
+
+            if (animator != null)
+                animator.SetBool("isMoving", true);
 
             while (!IsAtTarget() && elapsed < MaxMoveTime)
             {
@@ -81,6 +85,9 @@ namespace NPC
                 elapsed += Time.deltaTime;
                 yield return null;
             }
+
+            if (animator != null)
+                animator.SetBool("isMoving", false);
 
             if (elapsed >= MaxMoveTime)
                 Debug.LogWarning($"{name}: NPCMover.MoveRoutine — таймаут движения достигнут.");

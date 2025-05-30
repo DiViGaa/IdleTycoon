@@ -5,6 +5,7 @@ using System;
 
 namespace NPC
 {
+    [RequireComponent(typeof(NPCMover))]
     public class LogisticsNPC : MonoBehaviour
     {
         private ResourceType _resource;
@@ -16,8 +17,14 @@ namespace NPC
         private Action _onDelivered;
 
         private NPCMover _mover;
+        [SerializeField] private Animator animator;
 
         public bool IsReturned { get; private set; }
+
+        private void Awake()
+        {
+            _mover = GetComponent<NPCMover>();
+        }
 
         public void Setup(ResourceType resource, float amount, Vector3 start, Vector3 target, Action onDelivered)
         {
@@ -30,12 +37,16 @@ namespace NPC
             transform.position = _startPos;
             IsReturned = false;
 
-            _mover = GetComponent<NPCMover>();
             _mover.MoveTo(_targetPos, OnArrivedAtTarget);
         }
 
         private void OnArrivedAtTarget()
         {
+            if (animator != null)
+            {
+                animator.SetTrigger("isTaking");
+            }
+
             _onDelivered?.Invoke();
 
             _mover.MoveTo(_startPos, OnReturnedToBase);

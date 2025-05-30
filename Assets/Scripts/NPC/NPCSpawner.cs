@@ -94,7 +94,9 @@ public class NPCSpawner : MonoBehaviour
                         spawnPoint != null ? spawnPoint.position : transform.position,
                         Quaternion.identity
                     );
-
+                    
+                    npcObj.gameObject.transform.position = spawnPoint.position;
+                    
                     LogisticsNPC npc = npcObj.GetComponent<LogisticsNPC>();
 
                     npc.Setup(
