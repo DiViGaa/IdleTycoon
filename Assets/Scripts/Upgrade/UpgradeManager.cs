@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using System.IO;
 using Interface;
-using Newtonsoft.Json;
+using JSON;
 using UnityEngine;
 
 namespace Upgrade
@@ -9,7 +8,8 @@ namespace Upgrade
     public class UpgradeManager : IService
     {
         private Dictionary<string, BuildingUpgradeState> _upgradeStates = new();
-        
+        private readonly UpgradeSaveHandler _saveHandler = new();
+
         private readonly Dictionary<string, System.Type> _upgradeTypes = new()
         {
             { "MineCrysalor", typeof(MineUpgradeState) },
@@ -21,18 +21,9 @@ namespace Upgrade
             { "Storage", typeof(LogisticsCenterUpgrade) },
         };
 
-        private const string FileName = "building_upgrades.json";
-        private string FilePath => Path.Combine(Application.persistentDataPath, FileName);
-        
-        private JsonSerializerSettings _jsonSettings = new JsonSerializerSettings
-        {
-            TypeNameHandling = TypeNameHandling.Auto
-        };
-
-
         public void Initialize()
         {
-            Load();
+            _upgradeStates = _saveHandler.Load();
         }
 
         public BuildingUpgradeState GetUpgrade(string buildingId)
@@ -45,16 +36,15 @@ namespace Upgrade
                 }
                 else
                 {
-                    state = new BuildingUpgradeState(); // fallback
+                    state = new BuildingUpgradeState();
                 }
 
                 _upgradeStates[buildingId] = state;
-                Save();
+                _saveHandler.Save(_upgradeStates);
             }
 
             return state;
         }
-
 
         public bool TryUpgrade(string buildingId, int playerCoins)
         {
@@ -64,42 +54,17 @@ namespace Upgrade
             {
                 upgrade.Level++;
                 upgrade.UpgradeCost += Mathf.RoundToInt(upgrade.UpgradeCost * 0.5f);
-                Save();
+                _saveHandler.Save(_upgradeStates);
                 return true;
             }
 
             return false;
         }
 
-        public void Save()
-        {
-            string json = JsonConvert.SerializeObject(_upgradeStates, Formatting.Indented, _jsonSettings);
-            File.WriteAllText(FilePath, json);
-            Debug.Log($"[UpgradeManager] Data saved to {FilePath}");
-        }
-
-
-        public void Load()
-        {
-            if (File.Exists(FilePath))
-            {
-                string json = File.ReadAllText(FilePath);
-                _upgradeStates = JsonConvert.DeserializeObject<Dictionary<string, BuildingUpgradeState>>(json, _jsonSettings);
-                Debug.Log("[UpgradeManager] Data loaded.");
-            }
-            else
-            {
-                _upgradeStates = new Dictionary<string, BuildingUpgradeState>();
-                Save();
-                Debug.Log("[UpgradeManager] New upgrade save file created.");
-            }
-        }
-
-
         public void ResetAll()
         {
             _upgradeStates.Clear();
-            Save();
+            _saveHandler.Save(_upgradeStates);
         }
     }
 }

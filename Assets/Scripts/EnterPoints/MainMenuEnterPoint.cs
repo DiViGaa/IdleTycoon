@@ -16,6 +16,10 @@ namespace EnterPoints
         private AudioManager _audioManager;
         private JsonSetting _jsonSetting;
         
+        private UpgradeSaveHandler  _upgradeSaveHandler;
+        private PlayerDataIO  _playerDataIO;
+        private BuildingSaveHandler  _buildingSaveHandler;
+        
         private MainMenuDialog _mainMenuDialog;
         
         private void Start()
@@ -23,6 +27,9 @@ namespace EnterPoints
             _jsonSetting = new JsonSetting();
             _audioManager = new AudioManager();
             _settingManager = new SettingManager(_audioManager);
+            _upgradeSaveHandler = new UpgradeSaveHandler();
+            _playerDataIO = new PlayerDataIO();
+            _buildingSaveHandler = new BuildingSaveHandler();
             
             Register();
             CreateMainMenuDialog();
@@ -48,6 +55,10 @@ namespace EnterPoints
             ServiceLocator.Current.Register<JsonSetting>(_jsonSetting);
             ServiceLocator.Current.Register<AudioManager>(_audioManager);
             ServiceLocator.Current.Register<SettingManager>(_settingManager);
+            
+            ServiceLocator.Current.Register<UpgradeSaveHandler>(_upgradeSaveHandler);
+            ServiceLocator.Current.Register<PlayerDataIO>(_playerDataIO);
+            ServiceLocator.Current.Register<BuildingSaveHandler>(_buildingSaveHandler);
         }
         
         private void OnDisable() => Dispose();

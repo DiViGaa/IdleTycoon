@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using EnterPoints;
 using Interface;
+using JSON;
 using Newtonsoft.Json;
 using ServicesLocator;
 using UnityEngine;
@@ -19,16 +20,15 @@ namespace Buildings
         private Building _flyingBuilding;
         private UnityEngine.Camera mainCamera;
         private List<SavedBuildingData> _savedBuildings = new();
-        private string SavePath => Path.Combine(Application.persistentDataPath, "buildings.json");
+        private BuildingSaveHandler _saveHandler = new();
 
-
-        
         public void Initialize()
         {
             MainGameEnterPoint.OnUpdate += OnUpdate;
             grid = new Building[GridSize.x, GridSize.y];
-            LoadBuildings();
             mainCamera = UnityEngine.Camera.main;
+
+            LoadBuildings();
         }
 
         public void StartPlacingBuilding(Building buildingPrefab)
@@ -179,21 +179,14 @@ namespace Buildings
             grid = null;
             mainCamera = null;
         }
-        
+
         public void LoadBuildings()
         {
-            if (!File.Exists(SavePath))
-            {
-                Debug.Log("[BuildingManager] No building save file found.");
-                return;
-            }
+            var wrapper = _saveHandler.Load();
 
-            string json = File.ReadAllText(SavePath);
-            var wrapper = JsonUtility.FromJson<SavedBuildingsWrapper>(json);
-    
-            if (wrapper == null || wrapper.Buildings == null)
+            if (wrapper?.Buildings == null || wrapper.Buildings.Count == 0)
             {
-                Debug.LogWarning("[BuildingManager] Failed to deserialize buildings.");
+                Debug.Log("[BuildingManager] No saved buildings to load.");
                 return;
             }
 
@@ -211,13 +204,11 @@ namespace Buildings
                 var building = Instantiate(prefab);
                 building.transform.position = new Vector3(saved.Position.x, 0, saved.Position.y);
                 building.gameObject.isStatic = true;
-                Debug.Log($"[LoadBuildings] Instantiated {saved.BuildingId} at {saved.Position}");
-                
+
                 for (int x = 0; x < building.Size.x; x++)
                 for (int y = 0; y < building.Size.y; y++)
                     grid[saved.Position.x + x, saved.Position.y + y] = building;
             }
-
 
             _savedBuildings = wrapper.Buildings;
             Debug.Log($"[BuildingManager] Loaded {_savedBuildings.Count} buildings.");
@@ -231,9 +222,11 @@ namespace Buildings
         
         public void SaveBuildings()
         {
-            var wrapper = new SavedBuildingsWrapper { Buildings = _savedBuildings };
-            string json = JsonUtility.ToJson(wrapper, true);
-            File.WriteAllText(SavePath, json);
+            _saveHandler.Save(new SavedBuildingsWrapper
+            {
+                Buildings = _savedBuildings
+            });
+
             Debug.Log("[BuildingManager] Saved " + _savedBuildings.Count + " buildings.");
         }
 

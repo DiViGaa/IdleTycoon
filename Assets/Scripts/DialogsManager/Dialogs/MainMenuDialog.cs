@@ -1,3 +1,4 @@
+using JSON;
 using ServicesLocator;
 using SoundManager;
 using UnityEngine;
@@ -8,22 +9,47 @@ namespace DialogsManager.Dialogs
 {
     public class MainMenuDialog : Dialog
     {
-        [SerializeField] private Button playButton;
+        [SerializeField] private Button сontinueButton;
+        [SerializeField] private Button newGameButton;
         [SerializeField] private Button settingButton;
         [SerializeField] private Button exitButton;
 
         public void Initialize()
         {
-            playButton.onClick.AddListener(Play);
+            сontinueButton.onClick.AddListener(Сontinue);
+            newGameButton.onClick.AddListener(NewGame);
             settingButton.onClick.AddListener(ShowSettings);
             exitButton.onClick.AddListener(ExitGame);
+
+            сontinueButton.interactable = AreSavesAvailable();
         }
 
-        private void Play()
+        private void Сontinue()
         {
             SceneManager.LoadScene("MainGame");
             ServiceLocator.Current.Get<AudioManager>().PlaySound("ui", "UI");
         }
+        
+        private void NewGame()
+        {
+            SceneManager.LoadScene("MainGame");
+            ServiceLocator.Current.Get<AudioManager>().PlaySound("ui", "UI");
+        }
+        
+        private bool AreSavesAvailable()
+        {
+            return ServiceLocator.Current.Get<UpgradeSaveHandler>().Exists() &&
+                   ServiceLocator.Current.Get<BuildingSaveHandler>().Exists() &&
+                   ServiceLocator.Current.Get<PlayerDataIO>().Exists();
+        }
+        
+        private void DeleteAllSaves()
+        {
+            ServiceLocator.Current.Get<UpgradeSaveHandler>().Delete();
+            ServiceLocator.Current.Get<BuildingSaveHandler>().Delete();
+            ServiceLocator.Current.Get<PlayerDataIO>().Delete();
+        }
+        
 
         private void ShowSettings()
         {
@@ -41,7 +67,7 @@ namespace DialogsManager.Dialogs
 
         public override void Dispose()
         {
-            playButton.onClick.RemoveAllListeners();
+            сontinueButton.onClick.RemoveAllListeners();
             settingButton.onClick.RemoveAllListeners();
             exitButton.onClick.RemoveAllListeners();
         }
