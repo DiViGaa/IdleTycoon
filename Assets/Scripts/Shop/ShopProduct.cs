@@ -47,7 +47,7 @@ namespace Shop
         private void Buy()
         {
             var prefab =  Resources.Load<Building>(_productData.PrefabPath);
-            ServiceLocator.Current.Get<BuildingManager>().StartPlacingBuilding(prefab);
+            ServiceLocator.Current.Get<BuildingManager>().InputHandler.StartPlacement(prefab);
             ServiceLocator.Current.Get<AudioManager>().PlaySound("ui", "UI");
             MainGameShopDialog.CloseEvent.Invoke();
             DialogManager.ShowDialog<GameUIDialog>().Initialize();

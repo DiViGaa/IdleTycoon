@@ -6,19 +6,19 @@ namespace Buildings
 {
     public class BuildingClickHandler: IService
     {
-        private UnityEngine.Camera mainCamera;
+        private UnityEngine.Camera _mainCamera;
 
         public void Initialize()
         {
             MainGameEnterPoint.OnUpdate += OnUpdate;
-            mainCamera = UnityEngine.Camera.main;
+            _mainCamera = UnityEngine.Camera.main;
         }
 
         void OnUpdate()
         {
             if (Input.GetMouseButtonDown(0))
             {
-                var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+                var ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(ray, out var hit))
                 {
                     if (hit.collider.TryGetComponent(out IInteractable interactable))
