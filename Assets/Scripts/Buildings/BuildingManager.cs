@@ -11,7 +11,6 @@ namespace Buildings
         [SerializeField] private List<Building> availablePrefabs;
 
         private readonly List<IBuildingService> _services = new();
-        private UnityEngine.Camera _mainCamera;
 
         public GridSystem GridSystem { get; private set; }
         public PlacementHandler PlacementHandler { get; private set; }
@@ -21,10 +20,8 @@ namespace Buildings
 
         public void Initialize()
         {
-            _mainCamera = UnityEngine.Camera.main;
-
             GridSystem = new GridSystem(gridSize.x, gridSize.y);
-            PlacementHandler = new PlacementHandler(_mainCamera, GridSystem);
+            PlacementHandler = new PlacementHandler(GridSystem);
             Factory = new BuildingFactory(availablePrefabs);
             Saver = new BuildingSaver(GridSystem, Factory);
             InputHandler = new BuildInputHandler(this);

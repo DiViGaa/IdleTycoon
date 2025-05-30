@@ -26,7 +26,14 @@ namespace Buildings
         private void OnUpdate()
         {
             if (_current == null) return;
-
+            
+            if (Input.GetMouseButtonDown(2))
+            {
+                Object.Destroy(_current.gameObject);
+                _current = null;
+                return;
+            }
+            
             var ray = UnityEngine.Camera.main.ScreenPointToRay(Input.mousePosition);
             if (!_manager.PlacementHandler.TryGetPlacement(ray, _current, new Vector2Int(_manager.GridSystem.Width, _manager.GridSystem.Height), out var gridPos, out var hit))
                 return;

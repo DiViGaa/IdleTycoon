@@ -4,12 +4,10 @@ namespace Buildings
 {
     public class PlacementHandler : IBuildingService
     {
-        private readonly UnityEngine.Camera _camera;
         private readonly GridSystem _grid;
         
-        public PlacementHandler(UnityEngine.Camera camera, GridSystem grid)
+        public PlacementHandler( GridSystem grid)
         {
-            _camera = camera;
             _grid = grid;
         }
 
@@ -29,7 +27,9 @@ namespace Buildings
             int y = Mathf.Clamp(Mathf.FloorToInt(world.z), 0, maxSize.y - building.Size.y);
 
             gridPos = new Vector2Int(x, y);
-            return Physics.Raycast(ray, out hit, 100f);
+            int layerMask = ~LayerMask.GetMask("Building");
+            bool didHit = Physics.Raycast(ray, out hit, 100f, layerMask);
+            return didHit;
         }
 
         public bool CanPlace(Building building, Vector2Int pos, RaycastHit hit)
