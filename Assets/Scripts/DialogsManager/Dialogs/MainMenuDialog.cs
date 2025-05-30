@@ -32,6 +32,7 @@ namespace DialogsManager.Dialogs
         
         private void NewGame()
         {
+            DeleteAllSaves();
             SceneManager.LoadScene("MainGame");
             ServiceLocator.Current.Get<AudioManager>().PlaySound("ui", "UI");
         }
