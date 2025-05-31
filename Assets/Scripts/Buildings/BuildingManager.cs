@@ -8,8 +8,8 @@ namespace Buildings
     public class BuildingManager : MonoBehaviour, IService, IDisposable
     {
         [SerializeField] private Vector2Int gridSize = new(10, 10);
-        [SerializeField] private List<Building> availablePrefabs;
-
+        
+        private List<Building> availablePrefabs;
         private readonly List<IBuildingService> _services = new();
 
         public GridSystem GridSystem { get; private set; }
@@ -20,6 +20,7 @@ namespace Buildings
 
         public void Initialize()
         {
+            LoadAvailablePrefabs();
             GridSystem = new GridSystem(gridSize.x, gridSize.y);
             PlacementHandler = new PlacementHandler(GridSystem);
             Factory = new BuildingFactory(availablePrefabs);
@@ -34,11 +35,19 @@ namespace Buildings
             foreach (var service in _services)
                 service.Initialize();
         }
+        
+        private void LoadAvailablePrefabs()
+        {
+            availablePrefabs = new List<Building>(
+                Resources.LoadAll<Building>("Prefabs/Buildings")
+            );
+        }
 
         public void Dispose()
         {
             foreach (var service in _services)
                 service.Dispose();
+            availablePrefabs.Clear();
         }
     }
 }

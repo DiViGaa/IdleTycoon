@@ -1,11 +1,8 @@
-using Buildings;
-using JSON;
 using Services;
 using ServicesLocator;
 using SoundManager;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace DialogsManager.Dialogs
