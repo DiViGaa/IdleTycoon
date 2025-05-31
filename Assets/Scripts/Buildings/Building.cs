@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using DialogsManager;
@@ -13,16 +14,16 @@ namespace Buildings
         [SerializeField] private string buildingId;
         [SerializeField] private LayerMask allowedBuildLayers;
         [SerializeField] private Vector2Int size = Vector2Int.one;
-
         [SerializeField] private LayerMask removeOnStartLayers;
-
+        public string TypeId => buildingId;
+        public string InstanceId => _instanceId;
         public Vector2Int Size => size;
         public LayerMask AllowedBuildLayers => allowedBuildLayers;
-        public string BuildingId => buildingId;
 
         protected BuildingUpgradeState upgradeState;
         protected UpgradeManager upgradeManager;
 
+        private string _instanceId = Guid.NewGuid().ToString();
         private List<Renderer> _renderers = new List<Renderer>();
         private MaterialPropertyBlock _propertyBlock;
 
@@ -38,9 +39,8 @@ namespace Buildings
         public virtual void Start()
         {
             RemoveIntersectingObjects();
-
             upgradeManager = ServiceLocator.Current.Get<UpgradeManager>();
-            upgradeState = upgradeManager.GetUpgrade(buildingId);
+            upgradeState = upgradeManager.GetUpgrade(InstanceId, TypeId);
         }
 
         private void RemoveIntersectingObjects()
@@ -66,9 +66,9 @@ namespace Buildings
 
         public bool TryUpgrade(int playerCoins)
         {
-            if (upgradeManager.TryUpgrade(buildingId, playerCoins))
+            if (upgradeManager.TryUpgrade(InstanceId, TypeId, playerCoins))
             {
-                upgradeState = upgradeManager.GetUpgrade(buildingId);
+                upgradeState = upgradeManager.GetUpgrade(InstanceId, TypeId);
                 OnUpgraded();
                 return true;
             }

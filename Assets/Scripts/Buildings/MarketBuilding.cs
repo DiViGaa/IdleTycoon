@@ -29,7 +29,7 @@ namespace Buildings
 
             _player = ServiceLocator.Current.Get<Player.Player>();
 
-            _upgradeState = upgradeManager.GetUpgrade(BuildingId) as TradeTerminalUpgrade;
+            _upgradeState = upgradeManager.GetUpgrade(InstanceId, TypeId) as TradeTerminalUpgrade;
             if (_upgradeState == null)
             {
                 _upgradeState = new TradeTerminalUpgrade();

@@ -37,11 +37,11 @@ namespace Upgrade
         }
 
 
-        public BuildingUpgradeState GetUpgrade(string buildingId)
+        public BuildingUpgradeState GetUpgrade(string instanceId, string typeId)
         {
-            if (!_upgradeStates.TryGetValue(buildingId, out var state))
+            if (!_upgradeStates.TryGetValue(instanceId, out var state))
             {
-                if (_upgradeTypes.TryGetValue(buildingId, out var type))
+                if (_upgradeTypes.TryGetValue(typeId, out var type))
                 {
                     state = (BuildingUpgradeState)System.Activator.CreateInstance(type);
                 }
@@ -50,15 +50,15 @@ namespace Upgrade
                     state = new BuildingUpgradeState();
                 }
 
-                _upgradeStates[buildingId] = state;
+                _upgradeStates[instanceId] = state;
             }
 
             return state;
         }
 
-        public bool TryUpgrade(string buildingId, int playerCoins)
+        public bool TryUpgrade(string instanceId, string typeId, int playerCoins)
         {
-            var upgrade = GetUpgrade(buildingId);
+            var upgrade = GetUpgrade(instanceId, typeId);
 
             if (playerCoins >= upgrade.UpgradeCost)
             {
@@ -70,6 +70,7 @@ namespace Upgrade
 
             return false;
         }
+
 
         public void ResetAll()
         {

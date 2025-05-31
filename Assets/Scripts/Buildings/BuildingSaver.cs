@@ -50,7 +50,7 @@ namespace Buildings
         {
             SavedBuildings.Add(new SavedBuildingData
             {
-                BuildingId = building.BuildingId,
+                BuildingId = building.InstanceId,
                 Position = pos
             });
         }
