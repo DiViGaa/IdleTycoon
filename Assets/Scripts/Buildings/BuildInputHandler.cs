@@ -49,7 +49,6 @@ namespace Buildings
                 _current.SetNormal();
                 _current.gameObject.isStatic = true;
                 _manager.Saver.AddSaved(_current, gridPos);
-                _manager.Saver.Save();
                 _current = null;
             }
         }

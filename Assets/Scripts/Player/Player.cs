@@ -28,7 +28,6 @@ namespace Player
             }
 
             GameUIDialog.UpdateUI?.Invoke();
-            ServicesLocator.ServiceLocator.Current.Get<PlayerDataIO>().Save(Data);
         }
 
         public bool HasEnough(ResourceType type, float requiredAmount)
@@ -48,6 +47,11 @@ namespace Player
                 ResourceType.Coins => Data.Coins,
                 _ => 0
             };
+        }
+        
+        public void SetData(PlayerData data)
+        {
+            Data = data;
         }
     }
     

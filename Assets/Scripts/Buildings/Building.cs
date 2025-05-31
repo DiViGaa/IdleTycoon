@@ -4,6 +4,7 @@ using DialogsManager;
 using DialogsManager.Dialogs;
 using Upgrade;
 using ServicesLocator;
+using SoundManager;
 
 namespace Buildings
 {
@@ -128,6 +129,7 @@ namespace Buildings
 
         public virtual void OnInteract()
         {
+            ServiceLocator.Current.Get<AudioManager>().PlaySound("ui", "UI");
             var dialog = DialogManager.ShowDialog<BuildingUpgradeDialog>();
             dialog.Initialize(this);
         }

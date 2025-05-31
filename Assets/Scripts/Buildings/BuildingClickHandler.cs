@@ -1,10 +1,11 @@
+using System;
 using EnterPoints;
 using Interface;
 using UnityEngine;
 
 namespace Buildings
 {
-    public class BuildingClickHandler: IService
+    public class BuildingClickHandler: IService, IDisposable
     {
         private UnityEngine.Camera _mainCamera;
 
@@ -27,6 +28,12 @@ namespace Buildings
                     }
                 }
             }
+        }
+
+        public void Dispose()
+        {
+            MainGameEnterPoint.OnUpdate -= OnUpdate;
+            _mainCamera = null;
         }
     }
 }

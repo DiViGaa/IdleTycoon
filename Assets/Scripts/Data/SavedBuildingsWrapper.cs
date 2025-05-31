@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using Buildings;
 
-namespace Buildings
+namespace Data
 {
     [System.Serializable]
     public class SavedBuildingsWrapper

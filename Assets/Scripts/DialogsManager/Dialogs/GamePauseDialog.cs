@@ -1,3 +1,6 @@
+using Buildings;
+using JSON;
+using Services;
 using ServicesLocator;
 using SoundManager;
 using UnityEngine;
@@ -10,14 +13,22 @@ namespace DialogsManager.Dialogs
     public class GamePauseDialog : Dialog
     {
         [SerializeField] private Button resumeButton;
+        [SerializeField] private Button saveButton;
         [SerializeField] private Button settingButton;
         [SerializeField] private Button exitButton;
 
         public void Initialize()
         {
             resumeButton.onClick.AddListener(Resume);
+            saveButton.onClick.AddListener(Save);
             settingButton.onClick.AddListener(ShowSettings);
             exitButton.onClick.AddListener(ExitGame);
+        }
+
+        private void Save()
+        {
+            ServiceLocator.Current.Get<AudioManager>().PlaySound("ui", "UI");
+            ServiceLocator.Current.Get<SaverManager>().SaveAll();
         }
 
         private void Resume()

@@ -25,6 +25,17 @@ namespace Upgrade
         {
             _upgradeStates = _saveHandler.Load();
         }
+        
+        public Dictionary<string, BuildingUpgradeState> GetAllStates()
+        {
+            return _upgradeStates;
+        }
+
+        public void SetAllStates(Dictionary<string, BuildingUpgradeState> states)
+        {
+            _upgradeStates = states;
+        }
+
 
         public BuildingUpgradeState GetUpgrade(string buildingId)
         {
@@ -40,7 +51,6 @@ namespace Upgrade
                 }
 
                 _upgradeStates[buildingId] = state;
-                _saveHandler.Save(_upgradeStates);
             }
 
             return state;

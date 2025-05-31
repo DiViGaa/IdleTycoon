@@ -4,6 +4,8 @@ using Camera;
 using DialogsManager;
 using DialogsManager.Dialogs;
 using JSON;
+using Player;
+using Services;
 using ServicesLocator;
 using Settings;
 using Shop;
@@ -29,6 +31,12 @@ namespace EnterPoints
         private PlayerDataIO  _playerDataIO;
         private UpgradeManager _upgradeManager;
         private BuildingClickHandler _buildingClickHandler;
+        private UpgradeSaveHandler _upgradeSaveHandler;
+        
+        private PlayerSaver _playerSaver;
+        private UpgradeSaver _upgradeSaver;
+        private SaverManager _saverManager;
+
         
         public static Action OnUpdate;
         
@@ -42,12 +50,22 @@ namespace EnterPoints
             _productCreator = new ProductCreator();
             _upgradeManager = new UpgradeManager();
             _buildingClickHandler = new BuildingClickHandler();
-            _player = new Player.Player(_playerDataIO.Load());
+            _upgradeSaveHandler  = new UpgradeSaveHandler();
+
+            var playerData = _playerDataIO.Load();
+            _player = new Player.Player(playerData);
+
+            _playerSaver = new PlayerSaver();
+            _playerSaver.SetPlayer(_player);
             
+            _upgradeSaver = new UpgradeSaver(_upgradeManager, _upgradeSaveHandler);
+            _saverManager = new SaverManager(_playerSaver, _upgradeSaver);
+    
             Register();
             CreateGameUIDialog();
             Initialize();
         }
+
 
         private void Update()
         {
@@ -62,11 +80,12 @@ namespace EnterPoints
 
         private void Initialize()
         {
+            _upgradeManager.Initialize();
+            buildingManager.Initialize();
+            _saverManager.Initialize();
             _settingManager.Initialize();
             cameraMovement.Initialize();
             _productCreator.Initialize();
-            _upgradeManager.Initialize();
-            buildingManager.Initialize();
             _buildingClickHandler.Initialize();
         }
         
@@ -85,6 +104,10 @@ namespace EnterPoints
             ServiceLocator.Current.Register<PlayerDataIO>(_playerDataIO);
             ServiceLocator.Current.Register<UpgradeManager>(_upgradeManager);
             ServiceLocator.Current.Register<BuildingClickHandler>(_buildingClickHandler);
+            ServiceLocator.Current.Register<UpgradeSaveHandler>(_upgradeSaveHandler);
+            ServiceLocator.Current.Register<PlayerSaver>(_playerSaver);
+            ServiceLocator.Current.Register<UpgradeSaver>(_upgradeSaver);
+            ServiceLocator.Current.Register<SaverManager>(_saverManager);
         }
         
         private void OnDisable() => Dispose();
@@ -94,6 +117,7 @@ namespace EnterPoints
             _gameUIDialog.Dispose();
             cameraMovement.Dispose();
             buildingManager.Dispose();
+            _buildingClickHandler.Dispose();
         }
     }
 }
