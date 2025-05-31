@@ -1,10 +1,22 @@
+using Upgrade;
+
 namespace Buildings
 {
     public class AdministrativeComplex : Building
     {
+        private AdministrativeComplexUpgrade AdminUpgrade => (AdministrativeComplexUpgrade)upgradeState;
+
         public override string GetUpgradeInfo()
         {
-            return $"Level: {UpgradeLevel}\nEfficiency: {1 + 0.1f * (UpgradeLevel - 1):P0}\nUnlocks personnel management.";
+            return $"Level: {UpgradeLevel}\n" +
+                   $"Efficiency Bonus: {AdminUpgrade.EfficiencyBonus}%\n" +
+                   $"Max Personnel: {AdminUpgrade.MaxPersonnel}";
+        }
+
+        protected override void OnUpgraded()
+        {
+            AdminUpgrade.Upgrade();
+            base.OnUpgraded();
         }
     }
 }

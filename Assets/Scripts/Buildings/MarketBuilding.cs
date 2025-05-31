@@ -32,7 +32,6 @@ namespace Buildings
             _upgradeState = upgradeManager.GetUpgrade(BuildingId) as TradeTerminalUpgrade;
             if (_upgradeState == null)
             {
-                Debug.LogWarning("MarketBuilding: апгрейд не TradeTerminalUpgrade, использую дефолтные значения");
                 _upgradeState = new TradeTerminalUpgrade();
             }
 
@@ -86,9 +85,16 @@ namespace Buildings
                 if (totalGoldGained > 0 && _player != null)
                 {
                     _player.ChangeResource(ResourceType.Coins, +totalGoldGained);
-                    Debug.Log($"Market sold resources for {totalGoldGained} Gold");
                 }
             }
         }
+        
+        protected override void OnUpgraded()
+        {
+            
+            _upgradeState.Upgrade();
+            base.OnUpgraded();
+        }
+
     }
 }

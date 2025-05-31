@@ -25,10 +25,6 @@ namespace Buildings
             {
                 mine.MineType = mineType;
             }
-            else
-            {
-                Debug.LogError($"{BuildingId} имеет неверное состояние апгрейда.");
-            }
         }
 
         private void Update()
@@ -50,8 +46,6 @@ namespace Buildings
             {
                 _storedResources += extractionRate;
                 _storedResources = Mathf.Min(_storedResources, buffer);
-
-                Debug.Log($"{BuildingId} → добыто: +{extractionRate} {mineType}. Текущее: {_storedResources}/{buffer}");
             }
         }
         

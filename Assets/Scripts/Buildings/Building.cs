@@ -57,7 +57,6 @@ namespace Buildings
                 if (col.gameObject == this.gameObject)
                     continue;
 
-                Debug.Log($"Удаляем пересекающийся объект {col.gameObject.name} на слое {LayerMask.LayerToName(col.gameObject.layer)}");
                 Destroy(col.gameObject);
             }
         }
@@ -76,10 +75,7 @@ namespace Buildings
             return false;
         }
 
-        protected virtual void OnUpgraded()
-        {
-            Debug.Log($"{buildingId} upgraded to level {upgradeState.Level}");
-        }
+        protected virtual void OnUpgraded() { }
 
         public virtual string GetUpgradeInfo()
         {

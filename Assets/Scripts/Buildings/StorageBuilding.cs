@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using Interface;
 using Player;
+using Upgrade;
 
 namespace Buildings
 {
@@ -10,6 +11,7 @@ namespace Buildings
         private Dictionary<ResourceType, float> _storage = new();
 
         private float CapacityPerResource => 1000f * UpgradeLevel;
+        private LogisticsCenterUpgrade Storage => (LogisticsCenterUpgrade)upgradeState;
 
         public override string GetUpgradeInfo()
         {
@@ -73,7 +75,7 @@ namespace Buildings
 
         protected override void OnUpgraded()
         {
-            
+            Storage.Upgrade();
             base.OnUpgraded();
         }
     }
