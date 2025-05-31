@@ -2,6 +2,7 @@ using System;
 using EnterPoints;
 using Interface;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Buildings
 {
@@ -19,6 +20,10 @@ namespace Buildings
         {
             if (Input.GetMouseButtonDown(0))
             {
+                if (EventSystem.current.IsPointerOverGameObject())
+                {
+                    return;
+                }
                 var ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(ray, out var hit))
                 {
