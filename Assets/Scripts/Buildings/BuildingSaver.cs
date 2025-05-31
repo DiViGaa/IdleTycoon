@@ -40,19 +40,25 @@ namespace Buildings
 
                 building.transform.position = new Vector3(data.Position.x, 0, data.Position.y);
                 building.gameObject.isStatic = true;
+
+                building.SetInstanceId(data.InstanceId);
+
                 _grid.PlaceBuilding(data.Position, building);
             }
 
             SavedBuildings = wrapper.Buildings;
         }
 
+
         public void AddSaved(Building building, Vector2Int pos)
         {
             SavedBuildings.Add(new SavedBuildingData
             {
-                BuildingId = building.InstanceId,
-                Position = pos
+                BuildingId = building.TypeId,
+                Position = pos,
+                InstanceId = building.InstanceId 
             });
         }
+
     }
 }

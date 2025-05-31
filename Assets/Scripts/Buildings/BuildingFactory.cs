@@ -14,7 +14,7 @@ namespace Buildings
 
         public Building GetPrefabById(string id)
         {
-            return _prefabs.Find(b => b.InstanceId == id);
+            return _prefabs.Find(b => b.TypeId == id);
         }
 
         public Building CreateBuilding(string id)

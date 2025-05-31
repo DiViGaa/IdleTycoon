@@ -7,5 +7,6 @@ namespace Buildings
     {
         public string BuildingId;
         public Vector2Int Position;
+        public string InstanceId;
     }
 }

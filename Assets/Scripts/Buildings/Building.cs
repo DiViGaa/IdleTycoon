@@ -6,6 +6,7 @@ using DialogsManager.Dialogs;
 using Upgrade;
 using ServicesLocator;
 using SoundManager;
+using UnityEngine.Serialization;
 
 namespace Buildings
 {
@@ -23,9 +24,9 @@ namespace Buildings
         protected BuildingUpgradeState upgradeState;
         protected UpgradeManager upgradeManager;
 
-        private string _instanceId = Guid.NewGuid().ToString();
         private List<Renderer> _renderers = new List<Renderer>();
         private MaterialPropertyBlock _propertyBlock;
+        private string _instanceId;
 
         private static readonly int BaseColor = Shader.PropertyToID("_BaseColor");
         private static readonly int ColorProp = Shader.PropertyToID("_Color");
@@ -38,9 +39,17 @@ namespace Buildings
 
         public virtual void Start()
         {
+            if (string.IsNullOrEmpty(_instanceId))
+                _instanceId = Guid.NewGuid().ToString();
+            
             RemoveIntersectingObjects();
             upgradeManager = ServiceLocator.Current.Get<UpgradeManager>();
             upgradeState = upgradeManager.GetUpgrade(InstanceId, TypeId);
+        }
+        
+        public void SetInstanceId(string id)
+        {
+            _instanceId = id;
         }
 
         private void RemoveIntersectingObjects()
