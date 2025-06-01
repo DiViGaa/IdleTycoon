@@ -1,5 +1,7 @@
 using UnityEngine;
 using EnterPoints;
+using Player;
+using ServicesLocator;
 
 namespace Buildings
 {
@@ -7,6 +9,8 @@ namespace Buildings
     {
         private readonly BuildingManager _manager;
         private Building _current;
+        private int _pendingCost;
+        private bool _hasPendingCost;
 
         public BuildInputHandler(BuildingManager manager)
         {
@@ -31,6 +35,7 @@ namespace Buildings
             {
                 Object.Destroy(_current.gameObject);
                 _current = null;
+                _hasPendingCost = false;
                 return;
             }
             
@@ -51,15 +56,24 @@ namespace Buildings
                 _current.FinalizePlacement(true);
                 _manager.Saver.AddSaved(_current, gridPos);
                 _current = null;
+                
+                if (_hasPendingCost)
+                {
+                    ServiceLocator.Current.Get<Player.Player>().ChangeResource(ResourceType.Coins, -_pendingCost);
+                    _hasPendingCost = false;
+                }
             }
         }
 
-        public void StartPlacement(Building prefab)
+        public void StartPlacementWithCost(Building prefab, int cost)
         {
             if (_current != null)
                 Object.Destroy(_current.gameObject);
 
             _current = Object.Instantiate(prefab);
+            _pendingCost = cost;
+            _hasPendingCost = true;
         }
+
     }
 }

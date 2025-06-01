@@ -47,11 +47,10 @@ namespace Shop
         private void Buy()
         {
             var prefab =  Resources.Load<Building>(_productData.PrefabPath);
-            ServiceLocator.Current.Get<BuildingManager>().InputHandler.StartPlacement(prefab);
+            ServiceLocator.Current.Get<BuildingManager>().InputHandler.StartPlacementWithCost(prefab, _productData.Price);
             ServiceLocator.Current.Get<AudioManager>().PlaySound("ui", "UI");
             MainGameShopDialog.CloseEvent.Invoke();
             DialogManager.ShowDialog<GameUIDialog>().Initialize();
-            ServiceLocator.Current.Get<Player.Player>().ChangeResource(ResourceType.Coins, -_productData.Price);
         }
     }
 }
