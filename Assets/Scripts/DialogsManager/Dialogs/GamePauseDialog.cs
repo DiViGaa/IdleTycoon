@@ -12,6 +12,7 @@ namespace DialogsManager.Dialogs
         [SerializeField] private Button resumeButton;
         [SerializeField] private Button saveButton;
         [SerializeField] private Button settingButton;
+        [SerializeField] private Button helpButton;
         [SerializeField] private Button exitButton;
 
         public void Initialize()
@@ -20,6 +21,15 @@ namespace DialogsManager.Dialogs
             saveButton.onClick.AddListener(Save);
             settingButton.onClick.AddListener(ShowSettings);
             exitButton.onClick.AddListener(ExitGame);
+            helpButton.onClick.AddListener(Help);
+        }
+
+        private void Help()
+        {
+            var dialog = DialogManager.ShowDialog<HelpDialog>();
+            ServiceLocator.Current.Get<AudioManager>().PlaySound("ui", "UI");
+            dialog.Initialize();
+            Hide();
         }
 
         private void Save()

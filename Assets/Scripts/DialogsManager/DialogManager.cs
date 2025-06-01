@@ -21,6 +21,7 @@ namespace DialogsManager
             {typeof(GameUIDialog), "GameUIDialog"},
             {typeof(WelcomeDialog), "WelcomeDialog"},
             {typeof(FactoryDialog), "FactoryDialog"},
+            {typeof(HelpDialog), "HelpDialog"},
         };
 
         public static T ShowDialog<T>() where T : Dialog
