@@ -14,7 +14,7 @@ namespace JSON
                 var newData = new PlayerData
                 {
                     Cenoxium = 0,
-                    Coins = 5700,
+                    Coins = 18000,
                     Crysalor = 0,
                     Thalorite = 0,
                     Velorith = 0,

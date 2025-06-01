@@ -25,12 +25,25 @@ namespace DialogsManager.Dialogs
         {
             ServiceLocator.Current.Get<AudioManager>().PlaySound("ui", "UI");
             _factoryBuilding.SetProducedResource(ResourceType.Cenoxium);
+            var dialog = DialogManager.ShowDialog<FactoryDialog>();
+            dialog.Initialize(_factoryBuilding);
+            Hide();
         }
 
         private void ChangeThaloriteCraft()
         {
             ServiceLocator.Current.Get<AudioManager>().PlaySound("ui", "UI");
             _factoryBuilding.SetProducedResource(ResourceType.Thalorite);
+            var dialog = DialogManager.ShowDialog<FactoryDialog>();
+            dialog.Initialize(_factoryBuilding);
+            Hide();
+        }
+
+        public override void Dispose()
+        {
+            cenoxiumButton.onClick.RemoveListener(ChangeCenoxiumCraft);
+            thaloriteButton.onClick.RemoveListener(ChangeThaloriteCraft);
+            base.Dispose();
         }
     }
 }

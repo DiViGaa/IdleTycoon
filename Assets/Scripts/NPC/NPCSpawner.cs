@@ -134,6 +134,23 @@ namespace NPC
 
             return candidates.OrderBy(b => Vector3.Distance(transform.position, b.transform.position)).First();
         }
+        
+        public void AddTransportSettingIfMissing(ResourceTransportSetting newSetting)
+        {
+            bool exists = transportSettings.Any(ts =>
+                ts.Resource == newSetting.Resource && ts.TargetType == newSetting.TargetType);
+
+            if (!exists)
+            {
+                transportSettings.Add(newSetting);
+
+                if (!_coroutines.ContainsKey(newSetting.Resource))
+                {
+                    Coroutine c = StartCoroutine(TransportRoutine(newSetting));
+                    _coroutines.Add(newSetting.Resource, c);
+                }
+            }
+        }
 
         private void OnDisable()
         {

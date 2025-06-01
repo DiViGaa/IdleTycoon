@@ -124,10 +124,7 @@ MonoBehaviour:
   npcPrefab: {fileID: 1989016840586762202, guid: d65297e77eae00744a5e699934f25e74, type: 3}
   spawnPoint: {fileID: 1424271169892334502}
   sourceBuilding: {fileID: 3215066732183735744}
-  transportSettings:
-  - Resource: 0
-    TargetType: 0
-    CarryAmount: 10
+  transportSettings: []
 --- !u!1001 &6091548577102219762
 PrefabInstance:
   m_ObjectHideFlags: 0

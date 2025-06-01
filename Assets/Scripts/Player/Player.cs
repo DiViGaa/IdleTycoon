@@ -56,6 +56,7 @@ namespace Player
     
     public enum ResourceType
     {
+        None,
         Cenoxium,
         Crysalor,
         Thalorite,

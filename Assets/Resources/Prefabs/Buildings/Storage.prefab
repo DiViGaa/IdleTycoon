@@ -124,19 +124,19 @@ MonoBehaviour:
   spawnPoint: {fileID: 1823525529258129381}
   sourceBuilding: {fileID: -1348645404412627007}
   transportSettings:
+  - Resource: 2
+    TargetType: 1
+    CarryAmount: 10
   - Resource: 4
     TargetType: 1
     CarryAmount: 10
+  - Resource: 5
+    TargetType: 1
+    CarryAmount: 10
   - Resource: 1
-    TargetType: 1
-    CarryAmount: 10
-  - Resource: 3
-    TargetType: 1
-    CarryAmount: 10
-  - Resource: 0
     TargetType: 2
     CarryAmount: 10
-  - Resource: 2
+  - Resource: 3
     TargetType: 2
     CarryAmount: 10
 --- !u!1001 &8329580077787789938

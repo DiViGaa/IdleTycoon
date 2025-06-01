@@ -65,8 +65,8 @@ namespace Buildings
 
                 float totalGoldGained = 0f;
 
-                const float cenoxiumPrice = 10f;
-                const float thaloritePrice = 15f;
+                const float cenoxiumPrice = 1000f;
+                const float thaloritePrice = 1200f;
                 float profitMultiplier = 1f + (Terminal.ProfitBonusPercent / 100f);
 
                 if (_storage[ResourceType.Cenoxium] > 0)

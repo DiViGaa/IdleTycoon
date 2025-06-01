@@ -12,8 +12,9 @@ namespace Buildings
 {
     public class FactoryBuilding : Building, IResourceProvider, IResourceReceiver
     {
-        public ResourceType ProducedResource { get; private set; } = ResourceType.Cenoxium;
-
+        public ResourceType ProducedResource { get; private set; } =  ResourceType.None;
+        
+        [SerializeField] private NPCSpawner npcSpawner;
         private FactoryUpgrade Plant => (FactoryUpgrade)upgradeState;
 
         private float _storedOutput = 0f;
@@ -115,6 +116,18 @@ namespace Buildings
         {
             if (productionRecipes.ContainsKey(resourceType))
                 ProducedResource = resourceType;
+            
+            if (npcSpawner != null)
+            {
+                var newSetting = new ResourceTransportSetting
+                {
+                    Resource = ProducedResource,
+                    TargetType = LogisticTargetType.Storage,
+                    CarryAmount = 10f
+                };
+
+                npcSpawner.AddTransportSettingIfMissing(newSetting);
+            }
         }
 
         protected override void OnUpgraded()
