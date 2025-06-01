@@ -56,7 +56,7 @@ MonoBehaviour:
   removeOnStartLayers:
     serializedVersion: 2
     m_Bits: 768
-  mineType: 1
+  mineType: 2
 --- !u!65 &-5441772956252793573
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -94,7 +94,7 @@ MonoBehaviour:
   spawnPoint: {fileID: 2953756203596388822}
   sourceBuilding: {fileID: 639092244693026561}
   transportSettings:
-  - Resource: 1
+  - Resource: 2
     TargetType: 0
     CarryAmount: 50
 --- !u!1 &6639831185460181362
