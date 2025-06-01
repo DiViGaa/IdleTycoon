@@ -1,4 +1,4 @@
-namespace Buildings
+namespace Interface
 {
     public interface IStorageMarker { }
 }

@@ -87,10 +87,7 @@ namespace NPC
 
             if (animator != null)
                 animator.SetBool("isMoving", false);
-
-            if (elapsed >= MaxMoveTime)
-                Debug.LogWarning($"{name}: NPCMover.MoveRoutine — таймаут движения достигнут.");
-
+            
             _isMoving = false;
             _onArrived?.Invoke();
         }
@@ -101,7 +98,5 @@ namespace NPC
             Vector2 targetXZ = new Vector2(_targetPosition.x, _targetPosition.z);
             return Vector2.Distance(currentXZ, targetXZ) <= arrivalThreshold;
         }
-
-        public bool IsMoving => _isMoving;
     }
 }

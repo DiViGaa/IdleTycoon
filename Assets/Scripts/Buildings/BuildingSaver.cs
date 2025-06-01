@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Data;
+using Interface;
 using JSON;
 using UnityEngine;
 
@@ -25,7 +26,6 @@ namespace Buildings
         public void Save()
         {
             _saveHandler.Save(new SavedBuildingsWrapper { Buildings = SavedBuildings });
-            Debug.Log("[BuildingSaver] Saved " + SavedBuildings.Count);
         }
 
         public void Load()

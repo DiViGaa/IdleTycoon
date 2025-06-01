@@ -14,8 +14,7 @@ namespace Buildings
                 LocalizationSystem.Format("maxPersonnel", AdminUpgrade.MaxPersonnel);
 
         }
-
-
+        
         protected override void OnUpgraded()
         {
             AdminUpgrade.Upgrade();

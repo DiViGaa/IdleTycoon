@@ -1,152 +1,148 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
 using Buildings;
 using Interface;
-using NPC;
 using Player;
+using UnityEngine;
 
-public enum LogisticTargetType
+namespace NPC
 {
-    Storage,
-    Factory,
-    Market
-}
-
-[System.Serializable]
-public class ResourceTransportSetting
-{
-    public ResourceType Resource;
-    public LogisticTargetType TargetType;
-    public float CarryAmount = 10f;
-}
-
-public class NPCSpawner : MonoBehaviour
-{
-    [Header("Настройки NPC")]
-    [SerializeField] private GameObject npcPrefab;
-    [SerializeField] private Transform spawnPoint;
-
-    [Header("Источник ресурсов")]
-    [SerializeField] private Building sourceBuilding;
-
-    [Header("Настройки доставки ресурсов")]
-    [SerializeField] private List<ResourceTransportSetting> transportSettings = new();
-
-    private readonly Dictionary<ResourceType, Coroutine> _coroutines = new();
-    private IResourceProvider _provider;
-
-    private void Start()
+    public enum LogisticTargetType
     {
-        if (sourceBuilding == null)
-        {
-            Debug.LogError("NPCSpawner: sourceBuilding не назначен!");
-            return;
-        }
-
-        if (spawnPoint == null)
-        {
-            Debug.LogError("NPCSpawner: spawnPoint не назначен!");
-            return;
-        }
-
-        _provider = sourceBuilding.GetComponent<IResourceProvider>();
-        if (_provider == null)
-        {
-            Debug.LogError("NPCSpawner: sourceBuilding не реализует IResourceProvider");
-            return;
-        }
-
-        foreach (var setting in transportSettings)
-        {
-            if (_coroutines.ContainsKey(setting.Resource)) continue;
-
-            Coroutine c = StartCoroutine(TransportRoutine(setting));
-            _coroutines.Add(setting.Resource, c);
-        }
+        Storage,
+        Factory,
+        Market
     }
 
-    private IEnumerator TransportRoutine(ResourceTransportSetting setting)
+    [System.Serializable]
+    public class ResourceTransportSetting
     {
-        while (true)
+        public ResourceType Resource;
+        public LogisticTargetType TargetType;
+        public float CarryAmount = 10f;
+    }
+
+    public class NPCSpawner : MonoBehaviour
+    {
+        [SerializeField] private GameObject npcPrefab;
+        [SerializeField] private Transform spawnPoint;
+
+        [SerializeField] private Building sourceBuilding;
+
+        [SerializeField] private List<ResourceTransportSetting> transportSettings = new();
+
+        private readonly Dictionary<ResourceType, Coroutine> _coroutines = new();
+        private IResourceProvider _provider;
+
+        private void Start()
         {
-            Building targetBuilding = FindTargetBuilding(setting.TargetType);
-            if (targetBuilding == null)
+            if (sourceBuilding == null)
             {
-                yield return new WaitForSeconds(2f);
-                continue;
+                return;
             }
 
-            var receiver = targetBuilding.GetComponent<IResourceReceiver>();
-            if (receiver == null)
+            if (spawnPoint == null)
             {
-                yield return new WaitForSeconds(2f);
-                continue;
+                return;
             }
 
-            if (_provider.GetAmount(setting.Resource) >= setting.CarryAmount)
+            _provider = sourceBuilding.GetComponent<IResourceProvider>();
+            if (_provider == null)
             {
-                if (_provider.TryTakeResource(setting.Resource, setting.CarryAmount))
+                return;
+            }
+
+            foreach (var setting in transportSettings)
+            {
+                if (_coroutines.ContainsKey(setting.Resource)) continue;
+
+                Coroutine c = StartCoroutine(TransportRoutine(setting));
+                _coroutines.Add(setting.Resource, c);
+            }
+        }
+
+        private IEnumerator TransportRoutine(ResourceTransportSetting setting)
+        {
+            while (true)
+            {
+                Building targetBuilding = FindTargetBuilding(setting.TargetType);
+                if (targetBuilding == null)
                 {
-                    GameObject npcObj = Instantiate(
-                        npcPrefab,
-                        spawnPoint != null ? spawnPoint.position : transform.position,
-                        Quaternion.identity
-                    );
-                    
-                    npcObj.gameObject.transform.position = spawnPoint.position;
-                    
-                    LogisticsNPC npc = npcObj.GetComponent<LogisticsNPC>();
-
-                    npc.Setup(
-                        setting.Resource,
-                        setting.CarryAmount,
-                        sourceBuilding.transform.position,
-                        targetBuilding.transform.position,
-                        () => receiver.AddResource(setting.Resource, setting.CarryAmount)
-                    );
-
-                    yield return new WaitUntil(() => npc.IsReturned);
-
-                    Destroy(npcObj);
+                    yield return new WaitForSeconds(2f);
+                    continue;
                 }
+
+                var receiver = targetBuilding.GetComponent<IResourceReceiver>();
+                if (receiver == null)
+                {
+                    yield return new WaitForSeconds(2f);
+                    continue;
+                }
+
+                if (_provider.GetAmount(setting.Resource) >= setting.CarryAmount)
+                {
+                    if (_provider.TryTakeResource(setting.Resource, setting.CarryAmount))
+                    {
+                        GameObject npcObj = Instantiate(
+                            npcPrefab,
+                            spawnPoint != null ? spawnPoint.position : transform.position,
+                            Quaternion.identity
+                        );
+                    
+                        npcObj.gameObject.transform.position = spawnPoint.position;
+                    
+                        LogisticsNPC npc = npcObj.GetComponent<LogisticsNPC>();
+
+                        npc.Setup(
+                            setting.Resource,
+                            setting.CarryAmount,
+                            sourceBuilding.transform.position,
+                            targetBuilding.transform.position,
+                            () => receiver.AddResource(setting.Resource, setting.CarryAmount)
+                        );
+
+                        yield return new WaitUntil(() => npc.IsReturned);
+
+                        Destroy(npcObj);
+                    }
+                }
+
+                yield return new WaitForSeconds(0.5f);
             }
-
-            yield return new WaitForSeconds(0.5f);
         }
-    }
 
 
-    private Building FindTargetBuilding(LogisticTargetType targetType)
-    {
-        var candidates = FindObjectsOfType<Building>().Where(b =>
+        private Building FindTargetBuilding(LogisticTargetType targetType)
         {
-            switch (targetType)
+            var candidates = FindObjectsOfType<Building>().Where(b =>
             {
-                case LogisticTargetType.Storage:
-                    return b.GetComponent<IStorageMarker>() != null;
-                case LogisticTargetType.Factory:
-                    return b.GetComponent<FactoryBuilding>() != null;
-                case LogisticTargetType.Market:
-                    return b.GetComponent<MarketBuilding>() != null;
-                default:
-                    return false;
-            }
-        }).ToList();
+                switch (targetType)
+                {
+                    case LogisticTargetType.Storage:
+                        return b.GetComponent<IStorageMarker>() != null;
+                    case LogisticTargetType.Factory:
+                        return b.GetComponent<FactoryBuilding>() != null;
+                    case LogisticTargetType.Market:
+                        return b.GetComponent<MarketBuilding>() != null;
+                    default:
+                        return false;
+                }
+            }).ToList();
 
-        if (candidates.Count == 0) return null;
+            if (candidates.Count == 0) return null;
 
-        return candidates.OrderBy(b => Vector3.Distance(transform.position, b.transform.position)).First();
-    }
-
-    private void OnDisable()
-    {
-        foreach (var coroutine in _coroutines.Values)
-        {
-            if (coroutine != null)
-                StopCoroutine(coroutine);
+            return candidates.OrderBy(b => Vector3.Distance(transform.position, b.transform.position)).First();
         }
-        _coroutines.Clear();
+
+        private void OnDisable()
+        {
+            foreach (var coroutine in _coroutines.Values)
+            {
+                if (coroutine != null)
+                    StopCoroutine(coroutine);
+            }
+            _coroutines.Clear();
+        }
     }
 }

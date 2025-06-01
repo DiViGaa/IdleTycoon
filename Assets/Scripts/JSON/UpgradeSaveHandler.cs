@@ -22,14 +22,12 @@ namespace JSON
         {
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(data, Newtonsoft.Json.Formatting.Indented, _settings);
             System.IO.File.WriteAllText(FilePath, json);
-            UnityEngine.Debug.Log($"[UpgradeSaveHandler] Data saved to {FilePath}");
         }
 
         public override Dictionary<string, BuildingUpgradeState> Load()
         {
             if (!Exists())
             {
-                UnityEngine.Debug.LogWarning($"[UpgradeSaveHandler] File not found. Creating default.");
                 var defaultData = new Dictionary<string, BuildingUpgradeState>();
                 Save(defaultData);
                 return defaultData;

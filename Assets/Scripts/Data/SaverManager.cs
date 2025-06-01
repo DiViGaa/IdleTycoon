@@ -12,10 +12,6 @@ namespace Services
         private readonly PlayerSaver _playerSaver;
         private readonly UpgradeSaver _upgradeSaver;
         
-        public PlayerSaver Player => _playerSaver;
-        public UpgradeSaver Upgrade => _upgradeSaver;
-        public BuildingSaver Buildings => _buildingSaver;
-
         public SaverManager(PlayerSaver playerSaver, UpgradeSaver upgradeSaver)
         {
             _playerSaver = playerSaver;
@@ -34,16 +30,6 @@ namespace Services
             _playerSaver.Save();
             _upgradeSaver.Save();
             _buildingSaver.Save();
-            Debug.Log("[SaverManager] All data saved.");
         }
-
-        public void LoadAll()
-        {
-            _playerSaver.Load();
-            _upgradeSaver.Load();
-            _buildingSaver.Load();
-            Debug.Log("[SaverManager] All data loaded.");
-        }
-
     }
 }

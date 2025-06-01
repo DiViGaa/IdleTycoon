@@ -1,5 +1,6 @@
 using UnityEngine;
 using EnterPoints;
+using Interface;
 using Player;
 using ServicesLocator;
 

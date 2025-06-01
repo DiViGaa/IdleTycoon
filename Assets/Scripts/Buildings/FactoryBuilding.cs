@@ -112,8 +112,6 @@ namespace Buildings
         {
             if (productionRecipes.ContainsKey(resourceType))
                 ProducedResource = resourceType;
-            else
-                Debug.LogWarning($"Ресурс {resourceType} не поддерживается заводом.");
         }
 
         protected override void OnUpgraded()

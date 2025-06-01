@@ -9,7 +9,7 @@ namespace Buildings
     {
         [SerializeField] private Vector2Int gridSize = new(10, 10);
         
-        private List<Building> availablePrefabs;
+        private List<Building> _availablePrefabs;
         private readonly List<IBuildingService> _services = new();
 
         public GridSystem GridSystem { get; private set; }
@@ -23,7 +23,7 @@ namespace Buildings
             LoadAvailablePrefabs();
             GridSystem = new GridSystem(gridSize.x, gridSize.y);
             PlacementHandler = new PlacementHandler(GridSystem);
-            Factory = new BuildingFactory(availablePrefabs);
+            Factory = new BuildingFactory(_availablePrefabs);
             Saver = new BuildingSaver(GridSystem, Factory);
             InputHandler = new BuildInputHandler(this);
 
@@ -38,7 +38,7 @@ namespace Buildings
         
         private void LoadAvailablePrefabs()
         {
-            availablePrefabs = new List<Building>(
+            _availablePrefabs = new List<Building>(
                 Resources.LoadAll<Building>("Prefabs/Buildings")
             );
         }
@@ -47,7 +47,7 @@ namespace Buildings
         {
             foreach (var service in _services)
                 service.Dispose();
-            availablePrefabs.Clear();
+            _availablePrefabs.Clear();
         }
     }
 }

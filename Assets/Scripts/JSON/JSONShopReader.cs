@@ -16,7 +16,6 @@ namespace JSON
 
             if (jsonFile == null)
             {
-                Debug.LogError($"[LOAD] Failed to load JSON from Resources at path: {ResourcePath}");
                 return new List<ProductData>();
             }
 

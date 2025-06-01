@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DialogsManager;
 using DialogsManager.Dialogs;
+using Interface;
 using Upgrade;
 using ServicesLocator;
 using SoundManager;

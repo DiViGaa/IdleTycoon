@@ -1,4 +1,4 @@
-namespace Settings
+namespace Data
 {
     [System.Serializable]
     public class SettingData
