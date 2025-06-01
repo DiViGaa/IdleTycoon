@@ -17,7 +17,7 @@ namespace Upgrade
             { "MineZenthite", typeof(MineUpgradeState) },
             { "Factory", typeof(FactoryUpgrade) },
             { "Office", typeof(AdministrativeComplexUpgrade) },
-            { "Market", typeof(TradeTerminalUpgrade) },
+            { "Market", typeof(MarketUpgrade) },
             { "Storage", typeof(LogisticsCenterUpgrade) },
         };
 

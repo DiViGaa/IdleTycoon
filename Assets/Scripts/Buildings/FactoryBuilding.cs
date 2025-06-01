@@ -1,7 +1,10 @@
 using UnityEngine;
 using System.Collections.Generic;
+using DialogsManager;
+using DialogsManager.Dialogs;
 using Interface;
 using LocalizationTool;
+using NPC;
 using Player;
 using Upgrade;
 
@@ -118,6 +121,13 @@ namespace Buildings
         {
             Plant.Upgrade();
             base.OnUpgraded();
+        }
+        
+        public override void OnInteract()
+        {
+            base.OnInteract();
+            var dialog = DialogManager.ShowDialog<FactoryDialog>();
+            dialog.Initialize(this);
         }
     }
 }

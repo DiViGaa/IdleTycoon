@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
+using DialogsManager;
+using DialogsManager.Dialogs;
 using Interface;
 using LocalizationTool;
 using Player;
@@ -79,6 +81,13 @@ namespace Buildings
         {
             Storage.Upgrade();
             base.OnUpgraded();
+        }
+
+        public override void OnInteract()
+        {
+            base.OnInteract();
+            var dialog = DialogManager.ShowDialog<BuildingUpgradeDialog>();
+            dialog.Initialize(this);
         }
     }
 }

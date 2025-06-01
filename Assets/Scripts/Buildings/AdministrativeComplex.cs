@@ -1,3 +1,5 @@
+using DialogsManager;
+using DialogsManager.Dialogs;
 using LocalizationTool;
 using Upgrade;
 
@@ -19,6 +21,13 @@ namespace Buildings
         {
             AdminUpgrade.Upgrade();
             base.OnUpgraded();
+        }
+        
+        public override void OnInteract()
+        {
+            base.OnInteract();
+            var dialog = DialogManager.ShowDialog<BuildingUpgradeDialog>();
+            dialog.Initialize(this);
         }
     }
 }

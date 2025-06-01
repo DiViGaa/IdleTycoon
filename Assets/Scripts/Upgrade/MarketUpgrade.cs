@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Upgrade
 {
     [System.Serializable]
-    public class TradeTerminalUpgrade : BuildingUpgradeState
+    public class MarketUpgrade : BuildingUpgradeState
     {
         public float TradeSpeed = 1.0f;
         public float ProfitBonusPercent = 5f;

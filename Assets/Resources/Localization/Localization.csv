@@ -40,4 +40,5 @@
 "buffer","Storage Buffer: {0}","Буфер зберiгання: {0}","Буфер хранения: {0}"
 "storageCapacity","Storage Capacity: {0} per resource","Мiсткiсть сховища: {0} на ресурс","Ёмкость хранилища: {0} на ресурс"
 "welcomeMessage","Welcome!\n\nBefore you start, please build:\n1. Two mines\n2. A storage\n3. A factory\n4. A market","Ласкаво просимо!\n\nПеред початком побудуйте:\n1. Дві шахти\n2. Склад\n3. Завод\n4. Ринок","Добро пожаловать!\n\nПеред началом постройте:\n1. Две шахты\n2. Склад\n3. Завод\n4. Рынок"
-
+"cenoxiumCraft","Production of Сenoxium","Виробництво Сenoxium","Производство Сenoxium"
+"thaloriteCraft","Production of Thalorite","Виробництво Тhalorite","Производство Тhalorite"

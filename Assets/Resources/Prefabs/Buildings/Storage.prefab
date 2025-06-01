@@ -127,6 +127,9 @@ MonoBehaviour:
   - Resource: 4
     TargetType: 1
     CarryAmount: 10
+  - Resource: 1
+    TargetType: 1
+    CarryAmount: 10
   - Resource: 3
     TargetType: 1
     CarryAmount: 10

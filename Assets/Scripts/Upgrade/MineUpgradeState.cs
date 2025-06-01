@@ -1,21 +1,22 @@
 using Player;
 using UnityEngine;
-using Upgrade;
 
-
-[System.Serializable]
-public class MineUpgradeState : BuildingUpgradeState
+namespace Upgrade
 {
-    public ResourceType MineType;
-    
-    public float ExtractionRate = 5.0f;
-    public float StorageBuffer = 50f;
-
-    public void Upgrade()
+    [System.Serializable]
+    public class MineUpgradeState : BuildingUpgradeState
     {
-        Level++;
-        ExtractionRate += 0.5f;
-        StorageBuffer += 25f;
-        UpgradeCost = Mathf.CeilToInt(UpgradeCost * 1.5f);
+        public ResourceType MineType;
+    
+        public float ExtractionRate = 5.0f;
+        public float StorageBuffer = 50f;
+
+        public void Upgrade()
+        {
+            Level++;
+            ExtractionRate += 0.5f;
+            StorageBuffer += 25f;
+            UpgradeCost = Mathf.CeilToInt(UpgradeCost * 1.5f);
+        }
     }
 }

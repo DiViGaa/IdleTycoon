@@ -18,7 +18,7 @@ namespace DialogsManager.Dialogs
         private Building _building;
         private Player.Player _player;
 
-        public void Initialize(Building building)
+        public virtual void Initialize(Building building)
         {
             _building = building;
             _player = ServiceLocator.Current.Get<Player.Player>();

@@ -87,6 +87,7 @@ MonoBehaviour:
   removeOnStartLayers:
     serializedVersion: 2
     m_Bits: 512
+  npcSpawner: {fileID: -2277073289467712513}
 --- !u!65 &2748048794225547147
 BoxCollider:
   m_ObjectHideFlags: 0

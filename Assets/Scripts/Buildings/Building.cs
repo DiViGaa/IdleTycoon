@@ -147,8 +147,6 @@ namespace Buildings
         {
             if (!IsBuilt) return;
             ServiceLocator.Current.Get<AudioManager>().PlaySound("ui", "UI");
-            var dialog = DialogManager.ShowDialog<BuildingUpgradeDialog>();
-            dialog.Initialize(this);
         }
     }
 }

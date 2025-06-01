@@ -1,13 +1,15 @@
+using DialogsManager;
+using DialogsManager.Dialogs;
 using Interface;
 using LocalizationTool;
 using Player;
 using UnityEngine;
+using Upgrade;
 
 namespace Buildings
 {
     public class MineBuilding : Building, IResourceProvider
     {
-        [Header("Тип ресурса")]
         [SerializeField] private ResourceType mineType;
 
         private float _storedResources = 0f;
@@ -79,6 +81,13 @@ namespace Buildings
         {
             Mine.Upgrade();
             base.OnUpgraded();
+        }
+        
+        public override void OnInteract()
+        {
+            base.OnInteract();
+            var dialog = DialogManager.ShowDialog<BuildingUpgradeDialog>();
+            dialog.Initialize(this);
         }
     }
 }
