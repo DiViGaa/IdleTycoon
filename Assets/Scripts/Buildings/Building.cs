@@ -6,7 +6,6 @@ using DialogsManager.Dialogs;
 using Upgrade;
 using ServicesLocator;
 using SoundManager;
-using UnityEngine.Serialization;
 
 namespace Buildings
 {
@@ -16,6 +15,7 @@ namespace Buildings
         [SerializeField] private LayerMask allowedBuildLayers;
         [SerializeField] private Vector2Int size = Vector2Int.one;
         [SerializeField] private LayerMask removeOnStartLayers;
+        public bool IsBuilt => _isBuilt;
         public string TypeId => buildingId;
         public string InstanceId => _instanceId;
         public Vector2Int Size => size;
@@ -27,6 +27,7 @@ namespace Buildings
         private List<Renderer> _renderers = new List<Renderer>();
         private MaterialPropertyBlock _propertyBlock;
         private string _instanceId;
+        private bool _isBuilt;
 
         private static readonly int BaseColor = Shader.PropertyToID("_BaseColor");
         private static readonly int ColorProp = Shader.PropertyToID("_Color");
@@ -51,7 +52,16 @@ namespace Buildings
         {
             _instanceId = id;
         }
-
+        
+        public void FinalizePlacement(bool state)
+        {
+            _isBuilt = state;
+            if (state)
+                OnPlacementFinalized();
+        }
+        
+        protected virtual void OnPlacementFinalized() { }
+        
         private void RemoveIntersectingObjects()
         {
             float height = 3f;
@@ -134,6 +144,7 @@ namespace Buildings
 
         public virtual void OnInteract()
         {
+            if (!IsBuilt) return;
             ServiceLocator.Current.Get<AudioManager>().PlaySound("ui", "UI");
             var dialog = DialogManager.ShowDialog<BuildingUpgradeDialog>();
             dialog.Initialize(this);

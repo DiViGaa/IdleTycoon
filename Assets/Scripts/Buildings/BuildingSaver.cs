@@ -44,7 +44,10 @@ namespace Buildings
                 building.SetInstanceId(data.InstanceId);
 
                 _grid.PlaceBuilding(data.Position, building);
+                
+                building.FinalizePlacement(data.IsBuilt);
             }
+
 
             SavedBuildings = wrapper.Buildings;
         }
@@ -56,7 +59,8 @@ namespace Buildings
             {
                 BuildingId = building.TypeId,
                 Position = pos,
-                InstanceId = building.InstanceId 
+                InstanceId = building.InstanceId,
+                IsBuilt = building.IsBuilt
             });
         }
 

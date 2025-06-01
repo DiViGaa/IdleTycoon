@@ -34,8 +34,6 @@ namespace Buildings
             {
                 _upgradeState = new TradeTerminalUpgrade();
             }
-
-            StartCoroutine(SellRoutine());
         }
 
         public override string GetUpgradeInfo()
@@ -52,6 +50,12 @@ namespace Buildings
             _storage[type] += amount;
         }
 
+        protected override void OnPlacementFinalized()
+        {
+            base.OnPlacementFinalized();
+            StartCoroutine(SellRoutine());
+        }
+        
         private IEnumerator SellRoutine()
         {
             while (true)

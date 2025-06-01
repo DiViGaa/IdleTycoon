@@ -35,6 +35,7 @@ namespace Buildings
 
         private void Update()
         {
+            if (!IsBuilt) return;
             Produce(Time.deltaTime);
         }
 

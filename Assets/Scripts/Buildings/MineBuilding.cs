@@ -29,6 +29,7 @@ namespace Buildings
 
         private void Update()
         {
+            if (!IsBuilt) return;
             _extractionTimer += Time.deltaTime;
             if (_extractionTimer >= _extractionInterval)
             {
@@ -46,6 +47,7 @@ namespace Buildings
             {
                 _storedResources += extractionRate;
                 _storedResources = Mathf.Min(_storedResources, buffer);
+                Debug.Log($"{TypeId} → добыто: +{extractionRate} {mineType}. Текущее: {_storedResources}/{buffer}");
             }
         }
         

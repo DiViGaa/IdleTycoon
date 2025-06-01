@@ -48,6 +48,7 @@ namespace Buildings
                 _manager.GridSystem.PlaceBuilding(gridPos, _current);
                 _current.SetNormal();
                 _current.gameObject.isStatic = true;
+                _current.FinalizePlacement(true);
                 _manager.Saver.AddSaved(_current, gridPos);
                 _current = null;
             }
