@@ -75,5 +75,24 @@ namespace LocalizationTool
             return string.Format(formatString, args);
         }
 
+        
+        public static string GetFormattedLocalizedString(string key, params object[] args)
+        {
+            string rawString = GetLocalizedString(key);
+            if (rawString == null)
+                return key;
+
+            string processedString = rawString.Replace("\\n", "\n");
+
+            if (args != null && args.Length > 0)
+            {
+                return string.Format(processedString, args);
+            }
+            else
+            {
+                return processedString;
+            }
+        }
+
     }
 }

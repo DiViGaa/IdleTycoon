@@ -64,6 +64,11 @@ namespace EnterPoints
             Register();
             CreateGameUIDialog();
             Initialize();
+            
+            if (WelcomeDialog.ShouldShow())
+            {
+                DialogManager.ShowDialog<WelcomeDialog>();
+            }
         }
 
 
