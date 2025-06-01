@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Interface;
+using LocalizationTool;
 using Player;
 using Upgrade;
 
@@ -93,15 +94,19 @@ namespace Buildings
 
             if (productionRecipes.TryGetValue(ProducedResource, out var recipe))
             {
-                return $"Level: {UpgradeLevel}\n" +
-                       $"Producing: {ProducedResource}\n" +
-                       $"Requires: {recipe.input1} x{recipe.ratio1}, {recipe.input2} x{recipe.ratio2}\n" +
-                       $"Efficiency: {efficiency:P0}\n" +
-                       $"Storage Buffer: {StorageBuffer}";
+                string requires = $"{recipe.input1} x{recipe.ratio1}, {recipe.input2} x{recipe.ratio2}";
+
+                return
+                    LocalizationSystem.Format("upgradeLevel", UpgradeLevel) + "\n" +
+                    LocalizationSystem.Format("producing", ProducedResource) + "\n" +
+                    LocalizationSystem.Format("requires", requires) + "\n" +
+                    LocalizationSystem.Format("efficiency", efficiency.ToString("P0")) + "\n" +
+                    LocalizationSystem.Format("buffer", StorageBuffer);
             }
 
-            return $"Level: {UpgradeLevel}\nUnknown recipe";
+            return LocalizationSystem.GetLocalizedString("unknownRecipe");
         }
+
 
         public void SetProducedResource(ResourceType resourceType)
         {

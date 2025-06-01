@@ -1,3 +1,4 @@
+using LocalizationTool;
 using Upgrade;
 
 namespace Buildings
@@ -8,10 +9,12 @@ namespace Buildings
 
         public override string GetUpgradeInfo()
         {
-            return $"Level: {UpgradeLevel}\n" +
-                   $"Efficiency Bonus: {AdminUpgrade.EfficiencyBonus}%\n" +
-                   $"Max Personnel: {AdminUpgrade.MaxPersonnel}";
+            return LocalizationSystem.Format("upgradeLevel", UpgradeLevel)+ "\n" +
+                LocalizationSystem.Format("efficiencyBonus", AdminUpgrade.EfficiencyBonus)+ "\n" +
+                LocalizationSystem.Format("maxPersonnel", AdminUpgrade.MaxPersonnel);
+
         }
+
 
         protected override void OnUpgraded()
         {

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Interface;
+using LocalizationTool;
 using Player;
 using ServicesLocator;
 using Upgrade;
@@ -38,9 +39,10 @@ namespace Buildings
 
         public override string GetUpgradeInfo()
         {
-            return $"Level: {_upgradeState.Level}\n" +
-                   $"Trade Speed: {_upgradeState.TradeSpeed:F2}x\n" +
-                   $"Profit Bonus: {_upgradeState.ProfitBonusPercent}%";
+            return
+                LocalizationSystem.Format("upgradeLevel", _upgradeState.Level)+ "\n" +
+                LocalizationSystem.Format("tradeSpeed", _upgradeState.TradeSpeed.ToString("F2"))+ "\n" +
+                LocalizationSystem.Format("profitBonus", _upgradeState.ProfitBonusPercent);
         }
 
         public void AddResource(ResourceType type, float amount)

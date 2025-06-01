@@ -1,4 +1,5 @@
 using Interface;
+using LocalizationTool;
 using Player;
 using UnityEngine;
 
@@ -67,10 +68,12 @@ namespace Buildings
 
         public override string GetUpgradeInfo()
         {
-            return $"Level: {UpgradeLevel}\n" +
-                   $"Mining Speed: {Mine.ExtractionRate} / sec\n" +
-                   $"Storage Buffer: {Mine.StorageBuffer}";
+            return 
+                LocalizationSystem.Format("upgradeLevel", UpgradeLevel)+ "\n" +
+                LocalizationSystem.Format("miningSpeed", Mine.ExtractionRate)+ "\n" +
+                LocalizationSystem.Format("buffer", Mine.StorageBuffer);
         }
+
 
         protected override void OnUpgraded()
         {

@@ -1,4 +1,5 @@
 using Buildings;
+using LocalizationTool;
 using Player;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,7 +32,7 @@ namespace DialogsManager.Dialogs
         private void UpdateUI()
         {
             infoText.text = _building.GetUpgradeInfo();
-            costText.text = $"Upgrade Cost: {_building.UpgradeCost}";
+            costText.text = LocalizationSystem.Format("upgradeCost", _building.UpgradeCost);
         }
 
         private void OnUpgradeClick()

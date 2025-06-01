@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Interface;
+using LocalizationTool;
 using Player;
 using Upgrade;
 
@@ -15,8 +16,9 @@ namespace Buildings
 
         public override string GetUpgradeInfo()
         {
-            return $"Level: {UpgradeLevel}\n" +
-                   $"Storage Capacity: {CapacityPerResource} per resource";
+            return 
+                LocalizationSystem.Format("upgradeLevel", UpgradeLevel)+ "\n" +
+                LocalizationSystem.Format("storageCapacity", CapacityPerResource);
         }
 
         public override void Start()

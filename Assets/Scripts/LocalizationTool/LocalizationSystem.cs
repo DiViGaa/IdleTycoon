@@ -68,5 +68,12 @@ namespace LocalizationTool
             }
             return value;
         }
+        
+        public static string Format(string key, params object[] args)
+        {
+            var formatString = GetLocalizedString(key);
+            return string.Format(formatString, args);
+        }
+
     }
 }
